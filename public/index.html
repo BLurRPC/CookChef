@@ -6,13 +6,11 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="stylesheets/topbar.css">
   <link rel="stylesheet" href="stylesheets/footer.css">
-  <link rel="stylesheet" href="stylesheets/main.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="javascripts/myScripts.js"></script>
-  
+  <link rel="stylesheet" href="stylesheets/main.css"> 
 </head>
 
 <body>
+
  <!-- Navbar -->
  <div class="navbar">
    <a id="title" class="title" href="index.html"> CookChef</a>  
@@ -23,83 +21,25 @@
       <a href="#"><i class="fa fa-fw fa-sign-in"></i> Login</a>
       <a href="#"><i class="fa fa-fw fa-user-plus"></i> Register</a>
    </div>
- </div> 
-
- <div id="app-2">
-  <span v-bind:title="message">
-    Hover your mouse over me for a few seconds
-    to see my dynamically bound title!
-  </span>
-</div>
-
-  <div id="app-4">
-    <ol>
-      <li v-for="todo in todos">
-        {{ todo.text }}
-      </li>
-    </ol>
-  </div>
-
+ </div>       <!-- template for the modal component -->
+ 
  <!-- Thumbnails -->
- <section class="main">
-    <div>
-      <a href="images/fulls/01.jpg">
-        <img src="images/thumbs/01.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
+
+ <section class="main" id="app-5">
+     <!-- template for the modal component -->
+   <div v-for="article in articles">
+     <!-- app -->
+      <a>
+        <img v-bind:src="article.picture"/>
+        <h1>{{article.title}}</h1>
       </a>
-      <a href="images/fulls/02.jpg">
-        <img src="images/thumbs/02.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-    </div>
-    <div>
-      <a href="images/fulls/03.jpg">
-        <img src="images/thumbs/03.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-      <a href="images/fulls/04.jpg">
-        <img src="images/thumbs/04.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-      <a href="images/fulls/05.jpg">
-        <img src="images/thumbs/05.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-    </div>
-    <div>
-      <a href="images/fulls/06.jpg">
-        <img src="images/thumbs/06.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-      <a href="images/fulls/07.jpg">
-        <img src="images/thumbs/07.jpg" alt="" />
-        <h3>Lorem ipsum dolor sit amet</h3>
-      </a>
-    </div>
+   </div>
   </section>
 
  <!-- Footer -->
  <footer>
  </footer>
+ <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+ <script src="javascripts/myScripts.js"></script>
+ <script src="javascripts/showArticle.js"></script>
 </body>
-
-<script>
-  
-  var app4 = new Vue({
-    el: '#app-4',
-    data: {
-      todos: [
-        { text: 'Learn JavaScript' },
-        { text: 'Learn Vue' },
-        { text: 'Build something awesome' },
-        { text: 'Mike est là'}
-      ]
-    }
-  })
-
-
-var app5 = new Vue({
-  el: "#app-5",
-
-})
-</script>
