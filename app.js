@@ -16,7 +16,7 @@ var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 
 // Require configuration file defined in app/Config.js
-var config = require('./routes/Config')
+var config = require('./routes/config')
 
 // Connect to database
 mongoose.connect(config.DB)

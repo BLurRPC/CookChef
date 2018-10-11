@@ -22,7 +22,9 @@ articleRoutes.route('/all').get(function (req, res, next) {
 articleRoutes.route('/add').post(function (req, res) {
   Article.create(
     {
-      name: req.body.name,
+      title: req.body.title,
+      description: req.body.description,
+      picturePath: req.body.picturePath,
       done: false
     },
     function (error, article) {
@@ -54,8 +56,10 @@ articleRoutes.route('/update/:id').post(function (req, res, next) {
     if (error) {
       return next(new Error('Article was not found'))
     } else {
-      article.name = req.body.name
-      article.done = req.body.done
+      rticle.title= req.body.title,
+      article.description= req.body.description,
+      article.picturePath= req.body.picturePath,
+      article.done= false
 
       article.save({
         function (error, article) {

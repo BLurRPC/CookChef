@@ -1,45 +1,13 @@
-<head>
-  <meta charset="utf-8">
-  <title>CookChef</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Load an icon library -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" href="stylesheets/topbar.css">
-  <link rel="stylesheet" href="stylesheets/footer.css">
-  <link rel="stylesheet" href="stylesheets/main.css"> 
-</head>
+<!--/public/index.html  -->
 
-<body>
-
- <!-- Navbar -->
- <div class="navbar">
-   <a id="title" class="title" href="index.html"> CookChef</a>  
-   <a id="home" class="" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-   <a id="search" class="active" href="#"><i class="fa fa-fw fa-search"></i> Search</a>
-   <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
-   <div class="topnav-right">
-      <a href="#"><i class="fa fa-fw fa-sign-in"></i> Login</a>
-      <a href="#"><i class="fa fa-fw fa-user-plus"></i> Register</a>
-   </div>
- </div>       <!-- template for the modal component -->
- 
- <!-- Thumbnails -->
-
- <section class="main" id="app-5">
-     <!-- template for the modal component -->
-   <div v-for="article in articles">
-     <!-- app -->
-      <a>
-        <img v-bind:src="article.picture"/>
-        <h1>{{article.title}}</h1>
-      </a>
-   </div>
-  </section>
-
- <!-- Footer -->
- <footer>
- </footer>
- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
- <script src="javascripts/myScripts.js"></script>
- <script src="javascripts/showArticle.js"></script>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>VueJS NodeJS and Express  Todo App</title>
+  </head>
+  <body>
+    <app></app>
+    <script src="/build/bundle.js"></script>
+  </body>
+</html>

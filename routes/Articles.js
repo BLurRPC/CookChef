@@ -2,7 +2,15 @@ var mongoose = require('mongoose')
 // Define collection and schema for todo item
 
 var article = new mongoose.Schema({
-    name: {
+    title: {
+      type: String
+    },
+
+    description: {
+      type: String
+    },
+
+    picturePath: {
       type: String
     },
   
