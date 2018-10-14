@@ -18,7 +18,7 @@ articleRoutes.route('/all').get(function (req, res, next) {
   })
 })
 
-// create a article item
+// create an article item
 articleRoutes.route('/add').post(function (req, res) {
   Article.create(
     {
@@ -56,7 +56,7 @@ articleRoutes.route('/update/:id').post(function (req, res, next) {
     if (error) {
       return next(new Error('Article was not found'))
     } else {
-      rticle.title= req.body.title,
+      article.title= req.body.title,
       article.description= req.body.description,
       article.picturePath= req.body.picturePath,
       article.done= false

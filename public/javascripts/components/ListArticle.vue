@@ -1,7 +1,8 @@
+<link rel="stylesheet" href="/public/stylesheets/main.css"/>
 <template>
     <div>
 
-        <div class="col-md-12" v-show="articles.length>0">
+        <div class="main" v-show="articles.length>0">
 
             <h3>Article Items</h3>
 
