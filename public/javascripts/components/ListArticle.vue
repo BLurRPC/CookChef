@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/public/stylesheets/main.css"/>
 <template>
     <div>
 
@@ -6,35 +5,31 @@
 
             <h3>Article Items</h3>
 
-            <div class="row mrb-10" v-for="article in articles">
+            <div v-for="article in articles" :key="article.title">
+                
+                    
+                    <h1>{{article.title}}</h1>
 
-                <div class="input-group m-b-5">
-
-                    <span class="input-group-addon addon-right">
-                        <input type="checkbox" v-model="article.done"
-                               :checked="article.done" :value="article.done"
-                               v-on:change="updateArticle(article)"
-                               title="Mark as done?"/></span>
-
-                    <input type="text" class="form-control" :class="article.done?'article__done':''" v-model="article.title"
-                           @keypress="article.editing=true" @keyup.enter="updateArticle(article)">
-
-                    <span class="input-group-addon addon-left" title="Delete article?"
-                          v-on:click="deleteArticle(article._id)">X</span>
-
+                    <span title="Delete article?" v-on:click="deleteArticle(article._id)">X</span>
+                <div v-if="article.show">
+                        {{article.description}}
+                        <button v-on:click="showDescription(article, false)">Close the description</button>
+                </div>
+                <div v-else>
+                    <button v-on:click="showDescription(article, true)">Open the description</button>
                 </div>
 
-                <span class="help-block small" v-show="article.editing">Hit enter to update</span>
+                <span v-show="article.editing">Hit enter to update</span>
 
             </div>
 
         </div>
 
 
-        <div class="row alert alert-info text-center" v-show="articles.length==0">
+        <div v-show="articles.length==0">
 
 
-            <p class="alert alert-info">
+            <p>
                 <strong>All Caught Up</strong>
                 <br/>
                 You do not have any article items</p>
@@ -56,9 +51,7 @@
         data() {
 
             return {
-
                 articles: []
-
             }
 
         },
@@ -74,14 +67,27 @@
 
         methods: {
 
+            showDescription(article, status) {
+                article.show = status;
+                console.log(JSON.parse(JSON.stringify(article)));
+                this.$forceUpdate()
+            },
+
             fetchArticle() {
 
                 let uri = 'http://localhost:4000/api/all';
 
                 axios.get(uri).then((response) => {
-
-                    this.articles = response.data;
-
+                    try {
+                        this.articles = response.data;
+                        console.log(JSON.parse(JSON.stringify(this.articles)));
+                        for(var i=0; i<this.articles.length; i++) {
+                            this.articles[i].show = false;
+                        }
+                    } catch (err) {
+                        console.log(err)
+                    }
+                    
                 });
 
             },

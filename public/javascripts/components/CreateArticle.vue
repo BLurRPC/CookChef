@@ -35,7 +35,7 @@
         title: '',
         description: '',
         picturePath: '',
-        errors: [],
+        errors: []
       }
   
     },
@@ -64,20 +64,20 @@
         if (event) event.preventDefault();
         if(this.checkForm()) {
           let url = 'http://localhost:4000/api/add';
-        let param = {
-          title: this.title,
-          description: this.description,
-          picturePath: this.picturePath,
-          done: 0
-        };
-        axios.post(url, param).then((response) => {
-          console.log(response);
-          this.clearArticle();
-          this.refreshArticle();
-        }).catch((error) => {
-          console.log(error);
-  
-        })
+          let param = {
+            title: this.title,
+            description: this.description,
+            picturePath: this.picturePath,
+            done: 0
+          };
+          axios.post(url, param).then((response) => {
+            console.log(response);
+            this.clearArticle();
+            this.refreshArticle();
+          }).catch((error) => {
+            console.log(error);
+    
+          })
 
         }
       },
