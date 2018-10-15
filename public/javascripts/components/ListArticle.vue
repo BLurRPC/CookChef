@@ -7,7 +7,7 @@
                     
                     <h1 class="main h1">{{article.title}}</h1>
 
-                    <span title="Delete article?" v-on:click="deleteArticle(article._id)">X</span>
+                    <span title="Delete article?" v-on:click="deleteArticle(article.title)">X</span>
                 <div class="main button" v-if="article.show">
                         {{article.description}}<br/>
                         <button v-on:click="showDescription(article, false)">Close the description</button>

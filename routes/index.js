@@ -4,48 +4,32 @@ var express = require('express')
 
 var articleRoutes = express.Router()
 
-var Article = require('./Articles')
+var Articles = require('./Articles')
 
 // get all articles in the db
 
 articleRoutes.route('/all').get(function (req, res, next) {
-  Article.find(function (err, articles) {
-    if (err) {
-      return next(new Error(err))
-    }
-
-    res.json(articles) // return all todos
+    res.json(Articles) // return all articles
   })
-})
 
 // create an article item
 articleRoutes.route('/add').post(function (req, res) {
-  Article.create(
-    {
-      title: req.body.title,
-      description: req.body.description,
-      picturePath: req.body.picturePath,
-      done: false
-    },
-    function (error, article) {
-      if (error) {
-        res.status(400).send('Unable to create article list')
-      }
-      res.status(200).json(article)
-    }
-  )
+  const article = req.body;
+  Articles.push(article)
+  res.json(article)
 })
 
-// delete a article item
+// delete an article item
 
 articleRoutes.route('/delete/:id').get(function (req, res, next) {
-  var id = req.params.id
-  Article.findByIdAndRemove(id, function (err, article) {
-    if (err) {
-      return next(new Error('Article was not found'))
+  var title = req.params.id
+  for(var i=0; i< Articles.length; i++)
+  {
+    if(Articles[i].title == title) {
+      Articles.splice(i, 1);
     }
-    res.json('Successfully removed')
-  })
+  }
+  res.json('Successfully removed')
 })
 
 // perform update on article item

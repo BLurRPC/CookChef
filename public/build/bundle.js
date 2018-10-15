@@ -12280,7 +12280,7 @@ var render = function() {
                   attrs: { title: "Delete article?" },
                   on: {
                     click: function($event) {
-                      _vm.deleteArticle(article._id)
+                      _vm.deleteArticle(article.title)
                     }
                   }
                 },
