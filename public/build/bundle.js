@@ -10835,13 +10835,6 @@ const bus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -12270,73 +12263,64 @@ var render = function() {
         staticClass: "main"
       },
       [
-        _c("h3", [_vm._v("Article Items")]),
+        _c("h3", [_vm._v("Tous les articles")]),
         _vm._v(" "),
         _vm._l(_vm.articles, function(article) {
-          return _c("div", { key: article.title }, [
-            _c("h1", [_vm._v(_vm._s(article.title))]),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                attrs: { title: "Delete article?" },
-                on: {
-                  click: function($event) {
-                    _vm.deleteArticle(article._id)
+          return _c(
+            "div",
+            { key: article.title, staticClass: "main container" },
+            [
+              _c("h1", { staticClass: "main h1" }, [
+                _vm._v(_vm._s(article.title))
+              ]),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  attrs: { title: "Delete article?" },
+                  on: {
+                    click: function($event) {
+                      _vm.deleteArticle(article._id)
+                    }
                   }
-                }
-              },
-              [_vm._v("X")]
-            ),
-            _vm._v(" "),
-            article.show
-              ? _c("div", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(article.description) +
-                      "\n                    "
-                  ),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.showDescription(article, false)
+                },
+                [_vm._v("X")]
+              ),
+              _vm._v(" "),
+              article.show
+                ? _c("div", { staticClass: "main button" }, [
+                    _vm._v(
+                      "\n                    " + _vm._s(article.description)
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.showDescription(article, false)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Close the description")]
-                  )
-                ])
-              : _c("div", [
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.showDescription(article, true)
+                      },
+                      [_vm._v("Close the description")]
+                    )
+                  ])
+                : _c("div", { staticClass: "main button" }, [
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.showDescription(article, true)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Open the description")]
-                  )
-                ]),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: article.editing,
-                    expression: "article.editing"
-                  }
-                ]
-              },
-              [_vm._v("Hit enter to update")]
-            )
-          ])
+                      },
+                      [_vm._v("Open the description")]
+                    )
+                  ])
+            ]
+          )
         })
       ],
       2
@@ -12364,10 +12348,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
-      _c("strong", [_vm._v("All Caught Up")]),
+      _c("strong", [_vm._v("Aucun article")]),
       _vm._v(" "),
       _c("br"),
-      _vm._v("\n            You do not have any article items")
+      _vm._v("Il n'y a aucun article ....")
     ])
   }
 ]

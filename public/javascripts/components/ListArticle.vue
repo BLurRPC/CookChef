@@ -1,26 +1,20 @@
 <template>
     <div>
-
         <div class="main" v-show="articles.length>0">
-
-            <h3>Article Items</h3>
-
-            <div v-for="article in articles" :key="article.title">
+            <h3>Tous les articles</h3>
+            <div class="main container" v-for="article in articles" :key="article.title">
                 
                     
-                    <h1>{{article.title}}</h1>
+                    <h1 class="main h1">{{article.title}}</h1>
 
                     <span title="Delete article?" v-on:click="deleteArticle(article._id)">X</span>
-                <div v-if="article.show">
-                        {{article.description}}
+                <div class="main button" v-if="article.show">
+                        {{article.description}}<br/>
                         <button v-on:click="showDescription(article, false)">Close the description</button>
                 </div>
-                <div v-else>
+                <div v-else class="main button">
                     <button v-on:click="showDescription(article, true)">Open the description</button>
                 </div>
-
-                <span v-show="article.editing">Hit enter to update</span>
-
             </div>
 
         </div>
@@ -30,9 +24,8 @@
 
 
             <p>
-                <strong>All Caught Up</strong>
-                <br/>
-                You do not have any article items</p>
+                <strong>Aucun article</strong>
+                <br/>Il n'y a aucun article ....</p>
 
         </div>
 
