@@ -9,9 +9,9 @@
   
         <input type="text" class="form-control" placeholder="Your article title ?" v-model="title">
         <input type="text" class="form-control" placeholder="Your article description ?" v-model="description">
-        <input type="text" class="form-control" placeholder="Your picture ?" v-model="picturePath">
+        <input type="file" ref="file" name="file" @change="handleFileUpload()">
   
-        <input type="submit" value="Add article"/>
+        <input type="submit" value="Add Article"/>
         <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
           <ul>
@@ -34,7 +34,7 @@
       return {
         title: '',
         description: '',
-        picturePath: '',
+        file: '',
         errors: []
       }
   
@@ -43,7 +43,7 @@
     methods: {
 
       checkForm() {
-        if(this.title && this.picturePath && this.description) { //Check if form fields are not empty
+        if(this.title && this.description && this.file) { //Check if form fields are not empty
           return true;
         }
         this.errors = [];
@@ -54,23 +54,26 @@
         if(!this.description) {
           this.errors.push('Description required');
         }
-        if(!this.picturePath) {
+        if(!this.file) {
           this.errors.push('Picture required');
         }
         return false;
       },
 
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+        console.log(this.file);
+      },
+
       addArticle(event) {
         if (event) event.preventDefault();
         if(this.checkForm()) {
-          let url = 'http://localhost:4000/api/add';
-          let param = {
-            title: this.title,
-            description: this.description,
-            picturePath: this.picturePath,
-            done: 0
-          };
-          axios.post(url, param).then((response) => {
+          let url = '/api/add';
+          var bodyFormData = new FormData();
+          bodyFormData.set('title', this.title);
+          bodyFormData.set('description', this.description);
+          bodyFormData.append('file', this.file);
+          axios.post(url, bodyFormData).then((response) => {
             console.log(response);
             this.clearArticle();
             this.refreshArticle();

@@ -6,6 +6,7 @@
                 
                     
                     <h1 class="main h1">{{article.title}}</h1>
+                    <img :src="article.picturePath" @error="ErrorImage(article.picturePath)">
 
                     <span title="Delete article?" v-on:click="deleteArticle(article.title)">X</span>
                 <div class="main button" v-if="article.show">
@@ -66,9 +67,14 @@
                 this.$forceUpdate()
             },
 
+            ErrorImage(path) {
+                console.log('problem with image');
+                console.log(path);
+            },
+
             fetchArticle() {
 
-                let uri = 'http://localhost:4000/api/all';
+                let uri = '/api/all';
 
                 axios.get(uri).then((response) => {
                     try {
@@ -89,7 +95,7 @@
 
                 let id = article._id;
 
-                let uri = 'http://localhost:4000/api/update/' + id;
+                let uri = '/api/update/' + id;
 
                 article.editing = false;
 
@@ -108,7 +114,7 @@
 
             deleteArticle(id) {
 
-                let uri = 'http://localhost:4000/api/delete/' + id;
+                let uri = '/api/delete/' + id;
 
                 axios.get(uri);
 
