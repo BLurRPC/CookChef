@@ -36,7 +36,6 @@ articleRoutes.route('/add').post(upload.any(), function (req, res) {
   const title = req.body.title;
   const description = req.body.description;
   const file = req.files[0];
-  //console.log("file : ", file);
   var path = "/images/" + file.filename;
   console.log(path)
   Articles.push({title: title, description: description, picturePath: path});
@@ -63,8 +62,7 @@ articleRoutes.route('/update/:id').post(function (req, res, next) {
   for(var i=0; i< Articles.length; i++)
   {
     if(Articles[i].title == title) {
-      Articles[i].description= req.body.description,
-      Articles[i].done= false
+      Articles[i].description= req.body.description
     }
   }
   res.json('Successfully removed')

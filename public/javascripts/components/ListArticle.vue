@@ -6,11 +6,11 @@
                 
                     
                     <h1 class="main h1">{{article.title}}</h1>
-                    <img :src="article.picturePath" @error="ErrorImage(article.picturePath)">
+                    <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
 
                     <span title="Delete article?" v-on:click="deleteArticle(article.title)">X</span>
                 <div class="main button" v-if="article.show">
-                        {{article.description}}<br/>
+                        <input type="text" class="form-control" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
                         <button v-on:click="showDescription(article, false)">Close the description</button>
                 </div>
                 <div v-else class="main button">
@@ -93,12 +93,11 @@
 
             updateArticle(article) {
 
-                let id = article._id;
-
-                let uri = '/api/update/' + id;
-
-                article.editing = false;
-
+                let uri = '/api/update/' + article.title;
+                var bodyFormData = new FormData();
+                bodyFormData.set('title', article.title);
+                bodyFormData.set('description', article.description);
+                bodyFormData.append('file', article.file);
                 axios.post(uri, article).then((response) => {
 
                     console.log(response);

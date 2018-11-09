@@ -1,13 +1,13 @@
 
 var articles = [{
-    title: "Test1",
-    description: "Description1",
-    picturePath: "picturePath1"
+    title: "Tarte aux fraises",
+    description: "Une description de tarte aux fraises",
+    picturePath: "/images/tarteauxfraises.jfif"
   },
   {
-    title: "Test2",
-    description: "Description2",
-    picturePath: "picturePath2"
+    title: "Tarte aux citrons",
+    description: "Une description citronnée",
+    picturePath: "/images/tarteauxcitrons.jfif"
   }
 ]
   
