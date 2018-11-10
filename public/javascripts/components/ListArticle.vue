@@ -1,23 +1,25 @@
 <template>
     <div>
+        <h3 class="allArticles">Toutes nos recettes</h3>
         <div class="main" v-show="articles.length>0">
-            <h3>Tous les articles</h3>
-            <div class="main container" v-for="article in articles" :key="article.title">
-                
-                    
-                    <h1 class="main h1">{{article.title}}</h1>
-                    <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
-
-                    <span title="Delete article?" v-on:click="deleteArticle(article.title)">X</span>
-                <div class="main button" v-if="article.show">
-                        <input type="text" class="form-control" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
-                        <button v-on:click="showDescription(article, false)">Close the description</button>
+            <div class="item" v-for="article in articles" :key="article.id">   
+                <h1>{{article.title}}</h1>
+                <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
+                <div v-if="article.show">
+                    <input type="text" class="form-control" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
+                    <div class="ingredients">
+                        <h4>Liste des ingrédients requis :</h4>
+                        <ul>
+                            <li v-for="ingredient in article.ingredients">{{ ingredient }}</li>
+                        </ul>
+                    </div>
+                    <button class="red" v-on:click="showDescription(article, false)">Fermer la recette</button>
                 </div>
-                <div v-else class="main button">
-                    <button v-on:click="showDescription(article, true)">Open the description</button>
+                <div v-else>
+                    <button class="blue" v-on:click="showDescription(article, true)">Voir la recette</button>
                 </div>
+                <span class="deleteButton" title="Supprimer cette recette ?" v-on:click="deleteArticle(article.id)">X</span>
             </div>
-
         </div>
 
 
@@ -26,7 +28,8 @@
 
             <p>
                 <strong>Aucun article</strong>
-                <br/>Il n'y a aucun article ....</p>
+                <br/>Il n'y a aucun article ...
+            </p>
 
         </div>
 

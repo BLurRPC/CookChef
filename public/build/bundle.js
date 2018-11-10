@@ -10239,6 +10239,13 @@ function applyToTag (styleElement, obj) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10249,6 +10256,8 @@ function applyToTag (styleElement, obj) {
       title: '',
       description: '',
       file: '',
+      ingredient: '',
+      ingredients: [],
       errors: []
     };
   },
@@ -10256,20 +10265,23 @@ function applyToTag (styleElement, obj) {
   methods: {
 
     checkForm() {
-      if (this.title && this.description && this.file) {
+      if (this.title && this.description && this.file && this.ingredients.length > 0) {
         //Check if form fields are not empty
         return true;
       }
       this.errors = [];
 
       if (!this.title) {
-        this.errors.push('Title required');
+        this.errors.push('Votre recette n\'a pas de titre !');
       }
       if (!this.description) {
-        this.errors.push('Description required');
+        this.errors.push('Votre recette n\'a pas de description !');
       }
       if (!this.file) {
-        this.errors.push('Picture required');
+        this.errors.push('Votre recette n\'a pas d\'image !');
+      }
+      if (this.ingredients.length == 0) {
+        this.errors.push('Votre recette a besoin d\'au moins un ingrédient !');
       }
       return false;
     },
@@ -10279,6 +10291,22 @@ function applyToTag (styleElement, obj) {
       console.log(this.file);
     },
 
+    handleIngredient() {
+      if (this.ingredient) {
+        this.ingredient = this.ingredient.charAt(0).toUpperCase() + this.ingredient.substr(1).toLowerCase();
+        console.log("ok " + this.ingredient);
+        if (!this.ingredients.includes(this.ingredient)) {
+          this.ingredients.push(this.ingredient);
+          console.log("Added " + this.ingredients);
+          this.ingredient = '';
+        } else {
+          console.log(this.ingredient + "already added.");
+        }
+      } else {
+        console.log("field is empty.");
+      }
+    },
+
     addArticle(event) {
       if (event) event.preventDefault();
       if (this.checkForm()) {
@@ -10286,6 +10314,7 @@ function applyToTag (styleElement, obj) {
         var bodyFormData = new FormData();
         bodyFormData.set('title', this.title);
         bodyFormData.set('description', this.description);
+        bodyFormData.set('ingredients', this.ingredients);
         bodyFormData.append('file', this.file);
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, bodyFormData).then(response => {
           console.log(response);
@@ -10301,6 +10330,8 @@ function applyToTag (styleElement, obj) {
       this.title = '';
       this.description = '';
       this.picturePath = '';
+      this.ingredient = '';
+      this.ingredients = [];
       this.errors = [];
     },
 
@@ -10803,6 +10834,9 @@ const bus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(15);
+//
+//
+//
 //
 //
 //
@@ -12036,8 +12070,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("Create an Article List")]),
+  return _c("div", { staticClass: "main" }, [
+    _c("h2", [_vm._v("Créer une nouvelle recette !  ")]),
     _vm._v(" "),
     _c(
       "form",
@@ -12065,7 +12099,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Your article title ?" },
+            attrs: { type: "text", placeholder: "Titre de la recette" },
             domProps: { value: _vm.title },
             on: {
               input: function($event) {
@@ -12087,7 +12121,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Your article description ?" },
+            attrs: { type: "text", placeholder: "La recette" },
             domProps: { value: _vm.description },
             on: {
               input: function($event) {
@@ -12109,11 +12143,63 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("input", { attrs: { type: "submit", value: "Add Article" } }),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ingredient,
+                expression: "ingredient"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Ajoutez un ingrédient" },
+            domProps: { value: _vm.ingredient },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.ingredient = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.handleIngredient()
+                }
+              }
+            },
+            [_vm._v("Ajoutez l'ingrédient à la liste des ingrédients")]
+          ),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [
+            _vm._v("Ajouter la recette")
+          ]),
+          _vm._v(" "),
+          _vm.ingredients.length
+            ? _c("p", [
+                _c("b", [_vm._v("Liste des ingrédients pour cette recette :")]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  _vm._l(_vm.ingredients, function(ingredient) {
+                    return _c("li", [_vm._v(_vm._s(ingredient))])
+                  })
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _vm.errors.length
             ? _c("p", [
-                _c("b", [_vm._v("Please correct the following error(s):")]),
+                _c("b", [
+                  _vm._v("Veuillez corriger les erreur(s) suivantes :")
+                ]),
                 _vm._v(" "),
                 _c(
                   "ul",
@@ -12245,6 +12331,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("h3", { staticClass: "allArticles" }, [_vm._v("Toutes nos recettes")]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -12258,111 +12346,108 @@ var render = function() {
         ],
         staticClass: "main"
       },
-      [
-        _c("h3", [_vm._v("Tous les articles")]),
-        _vm._v(" "),
-        _vm._l(_vm.articles, function(article) {
-          return _c(
-            "div",
-            { key: article.title, staticClass: "main container" },
-            [
-              _c("h1", { staticClass: "main h1" }, [
-                _vm._v(_vm._s(article.title))
-              ]),
-              _vm._v(" "),
-              _c("img", {
-                attrs: { src: article.picturePath },
-                on: {
-                  error: function($event) {
-                    _vm.ErrorImage(article.picturePath)
-                  }
-                }
-              }),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  attrs: { title: "Delete article?" },
+      _vm._l(_vm.articles, function(article) {
+        return _c("div", { key: article.id, staticClass: "item" }, [
+          _c("h1", [_vm._v(_vm._s(article.title))]),
+          _vm._v(" "),
+          _c("img", {
+            attrs: { src: article.picturePath },
+            on: {
+              error: function($event) {
+                _vm.ErrorImage(article.picturePath)
+              }
+            }
+          }),
+          _c("br"),
+          _vm._v(" "),
+          article.show
+            ? _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: article.description,
+                      expression: "article.description"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: article.description },
                   on: {
-                    click: function($event) {
-                      _vm.deleteArticle(article.title)
+                    keyup: function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      _vm.updateArticle(article)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(article, "description", $event.target.value)
                     }
                   }
-                },
-                [_vm._v("X")]
-              ),
-              _vm._v(" "),
-              article.show
-                ? _c("div", { staticClass: "main button" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: article.description,
-                          expression: "article.description"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text" },
-                      domProps: { value: article.description },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          _vm.updateArticle(article)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(article, "description", $event.target.value)
-                        }
+                }),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "ingredients" }, [
+                  _c("h4", [_vm._v("Liste des ingrédients requis :")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(article.ingredients, function(ingredient) {
+                      return _c("li", [_vm._v(_vm._s(ingredient))])
+                    })
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "red",
+                    on: {
+                      click: function($event) {
+                        _vm.showDescription(article, false)
                       }
-                    }),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.showDescription(article, false)
-                          }
-                        }
-                      },
-                      [_vm._v("Close the description")]
-                    )
-                  ])
-                : _c("div", { staticClass: "main button" }, [
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.showDescription(article, true)
-                          }
-                        }
-                      },
-                      [_vm._v("Open the description")]
-                    )
-                  ])
-            ]
+                    }
+                  },
+                  [_vm._v("Fermer la recette")]
+                )
+              ])
+            : _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "blue",
+                    on: {
+                      click: function($event) {
+                        _vm.showDescription(article, true)
+                      }
+                    }
+                  },
+                  [_vm._v("Voir la recette")]
+                )
+              ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "deleteButton",
+              attrs: { title: "Supprimer cette recette ?" },
+              on: {
+                click: function($event) {
+                  _vm.deleteArticle(article.id)
+                }
+              }
+            },
+            [_vm._v("X")]
           )
-        })
-      ],
-      2
+        ])
+      })
     ),
     _vm._v(" "),
     _c(
@@ -12390,7 +12475,7 @@ var staticRenderFns = [
       _c("strong", [_vm._v("Aucun article")]),
       _vm._v(" "),
       _c("br"),
-      _vm._v("Il n'y a aucun article ....")
+      _vm._v("Il n'y a aucun article ...\n        ")
     ])
   }
 ]

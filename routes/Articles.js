@@ -1,13 +1,17 @@
 
 var articles = [{
+    id: 0,
     title: "Tarte aux fraises",
     description: "Une description de tarte aux fraises",
-    picturePath: "/images/tarteauxfraises.jfif"
+    picturePath: "/images/tarteauxfraises.jpg",
+    ingredients: ["Sucre","Oeuf","Beurre", "Lait"]
   },
   {
+    id: 1,
     title: "Tarte aux citrons",
     description: "Une description citronnée",
-    picturePath: "/images/tarteauxcitrons.jfif"
+    picturePath: "/images/tarteauxcitrons.jfif",
+    ingredients: ["Sucre","Oeuf","Beurre"]
   }
 ]
   

@@ -12,6 +12,8 @@ var path = require('path')
 
 var crypto = require('crypto');
 
+const fs = require('fs');
+
 var storage = multer.diskStorage({
   destination: path.join(__dirname, '../public/images'),
   filename: function (req, file, cb) {
@@ -33,23 +35,32 @@ articleRoutes.route('/all').get(function (req, res, next) {
 
 // create an article item
 articleRoutes.route('/add').post(upload.any(), function (req, res) {
+  const id = Articles[Articles.length-1].id + 1 //Add A to the new article id
   const title = req.body.title;
   const description = req.body.description;
+  var ingredients = req.body.ingredients.split(",");
+  for (var ingredient in ingredients) {
+    ingredient = ingredient.charAt(0).toUpperCase() + ingredient.substr(1).toLowerCase();
+  }
   const file = req.files[0];
   var path = "/images/" + file.filename;
   console.log(path)
-  Articles.push({title: title, description: description, picturePath: path});
+  Articles.push({id: id, title: title, description: description, picturePath: path, ingredients: ingredients});
   res.json(Articles)
 })
 
 // delete an article item
 
 articleRoutes.route('/delete/:id').get(function (req, res, next) {
-  var title = req.params.id
+  var id = req.params.id
   for(var i=0; i< Articles.length; i++)
   {
-    if(Articles[i].title == title) {
-      Articles.splice(i, 1);
+    if(Articles[i].id == id) {
+      fs.unlink("./public" + Articles[i].picturePath, (err) => { //Remove picture from memory
+        if (err) throw err;
+        console.log('successfully deleted picture');
+      });
+      Articles.splice(i, 1); //Remove from array
     }
   }
   res.json('Successfully removed')
