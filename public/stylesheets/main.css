@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes|Patrick+Hand');
 
 body {
     margin: 0;
@@ -9,51 +10,96 @@ body {
 .main {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     position: relative;
     flex-wrap: wrap;
-    background-color: rgba(146, 182, 213, 0.2);
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 4vh;
+    line-height: 4vh;
 }
-
-    .main a {
-        border-bottom: none;
-        display: block;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 20px;
-        color: #3b444b;
-        cursor: pointer;
-        outline: 0;
-        overflow: hidden;
+    .main h2 { 
+        color: #1d4457;
+        font-family: "Great Vibes", cursive;
+        font-size: 3vw; 
+        line-height: 0vw; 
+        font-weight: bold; 
+        text-align: center; 
+        text-shadow: 0 1vw 1vh #fff; 
     }
-
-        .main a img {
-            display: block;
-            height: 35vh;
-            width: 100%;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-
-        .main a h1 {
-            font-size: 1.2em;
-            margin: 0.2em;
-            padding: 0;
-        }
-
-        .main a:hover h1 {
-            color: #16689B;
-        }
-
-    .main > div {
+    .main .item {
         display: flex;
-        align-items: stretch;
-        margin: 1em;
-        flex: 1 1 15%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        flex-basis: 22%;
+        margin: 1vh 1vw 1vh 1vw;
     }
 
-        .main > div > :last-child {
-            margin-bottom: 0;
-        }
+    .item h1 { 
+        color: #1d4457;
+        font-family: "Great Vibes", cursive;
+        font-size: 5vw; 
+        line-height: 4vw; 
+        font-weight: bold; 
+        text-align: center; 
+        text-shadow: 0 1vw 1vh #fff; 
+    }
+
+    .item img {
+        width: 80%;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    
+    .allArticles {
+        color: #d54d7b; 
+        font-family: 'Patrick Hand', cursive;
+        font-size: 7vw; 
+        line-height: 0vw; 
+        font-weight: bold; 
+        text-align: center; 
+    }
+
+    .ingredients {
+        text-align: left;
+    }
+
+    .deleteButton {
+        text-align: center;
+        color: #a10000; 
+    }
+    .item button {
+        margin-top: 2vh;
+        text-decoration: none;
+        color:rgb(229, 197, 255);
+        padding: 1vh 3vw;
+        display: inline-block;
+        position: relative;
+        border: 0.1vh solid rgba(0,0,0,0.21);
+        border-bottom: 0.4vw solid rgba(0,0,0,0.21);
+        border-radius: 0.4vw;
+        text-shadow: 0 0.1vw 0 rgba(0,0,0,0.15);
+    }
+
+    .item button.blue {
+        background: #1d4457;
+        background: -moz-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(102,152,203,1)), color-stop(100%, rgba(92,138,184,1)));
+        background: -webkit-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
+        background: -o-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
+        background: -ms-linear-gradient(top, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
+        background: linear-gradient(to bottom, rgba(102,152,203,1) 0%, rgba(92,138,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6698cb', endColorstr='#5c8ab8', GradientType=0 );
+    }
+
+    .item button.red{ 
+        background: rgba(250,90,90,1);
+        background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(250,90,90,1)), to(rgba(232,81,81,1)));
+        background: -webkit-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
+        background: -moz-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
+        background: -o-linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
+        background: linear-gradient(rgba(250,90,90,1) 0%, rgba(232,81,81,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa5a5a', endColorstr='#e85151', GradientType=0 );
+    }

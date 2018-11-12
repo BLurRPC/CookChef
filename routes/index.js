@@ -4,74 +4,79 @@ var express = require('express')
 
 var articleRoutes = express.Router()
 
-var Article = require('./Articles')
+var Articles = require('./Articles')
+
+var multer = require('multer');
+
+var path = require('path')
+
+var crypto = require('crypto');
+
+const fs = require('fs');
+
+var storage = multer.diskStorage({
+  destination: path.join(__dirname, '../public/images'),
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return cb(err)
+
+      cb(null, raw.toString('hex') + path.extname(file.originalname))
+    })
+  }
+})
+
+var upload = multer({ storage: storage })
 
 // get all articles in the db
 
 articleRoutes.route('/all').get(function (req, res, next) {
-  Article.find(function (err, articles) {
-    if (err) {
-      return next(new Error(err))
-    }
-
-    res.json(articles) // return all todos
+    res.json(Articles) // return all articles
   })
-})
 
 // create an article item
-articleRoutes.route('/add').post(function (req, res) {
-  Article.create(
-    {
-      title: req.body.title,
-      description: req.body.description,
-      picturePath: req.body.picturePath,
-      done: false
-    },
-    function (error, article) {
-      if (error) {
-        res.status(400).send('Unable to create article list')
-      }
-      res.status(200).json(article)
-    }
-  )
+articleRoutes.route('/add').post(upload.any(), function (req, res) {
+  const id = Articles[Articles.length-1].id + 1 //Add A to the new article id
+  const title = req.body.title;
+  const description = req.body.description;
+  var ingredients = req.body.ingredients.split(",");
+  for (var ingredient in ingredients) {
+    ingredient = ingredient.charAt(0).toUpperCase() + ingredient.substr(1).toLowerCase();
+  }
+  const file = req.files[0];
+  var path = "/images/" + file.filename;
+  console.log(path)
+  Articles.push({id: id, title: title, description: description, picturePath: path, ingredients: ingredients});
+  res.json(Articles)
 })
 
-// delete a article item
+// delete an article item
 
 articleRoutes.route('/delete/:id').get(function (req, res, next) {
   var id = req.params.id
-  Article.findByIdAndRemove(id, function (err, article) {
-    if (err) {
-      return next(new Error('Article was not found'))
+  for(var i=0; i< Articles.length; i++)
+  {
+    if(Articles[i].id == id) {
+      fs.unlink("./public" + Articles[i].picturePath, (err) => { //Remove picture from memory
+        if (err) throw err;
+        console.log('successfully deleted picture');
+      });
+      Articles.splice(i, 1); //Remove from array
     }
-    res.json('Successfully removed')
-  })
+  }
+  res.json('Successfully removed')
 })
 
 // perform update on article item
 
 articleRoutes.route('/update/:id').post(function (req, res, next) {
-  var id = req.params.id
-  Article.findById(id, function (error, article) {
-    if (error) {
-      return next(new Error('Article was not found'))
-    } else {
-      article.title= req.body.title,
-      article.description= req.body.description,
-      article.picturePath= req.body.picturePath,
-      article.done= false
-
-      article.save({
-        function (error, article) {
-          if (error) {
-            res.status(400).send('Unable to update article')
-          } else {
-            res.status(200).json(article)
-          }
-        }
-      })
+  var title = req.params.id
+  for(var i=0; i< Articles.length; i++)
+  {
+    if(Articles[i].title == title) {
+      Articles[i].description= req.body.description
     }
-  })
+  }
+  res.json('Successfully removed')
 })
 
 module.exports = articleRoutes

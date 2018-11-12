@@ -1,28 +1,25 @@
 <template>
     <div>
-
+        <h3 class="allArticles">Toutes nos recettes</h3>
         <div class="main" v-show="articles.length>0">
-
-            <h3>Article Items</h3>
-
-            <div v-for="article in articles" :key="article.title">
-                
-                    
-                    <h1>{{article.title}}</h1>
-
-                    <span title="Delete article?" v-on:click="deleteArticle(article._id)">X</span>
+            <div class="item" v-for="article in articles" :key="article.id">   
+                <h1>{{article.title}}</h1>
+                <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
                 <div v-if="article.show">
-                        {{article.description}}
-                        <button v-on:click="showDescription(article, false)">Close the description</button>
+                    <input type="text" class="form-control" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
+                    <div class="ingredients">
+                        <h4>Liste des ingrédients requis :</h4>
+                        <ul>
+                            <li v-for="ingredient in article.ingredients">{{ ingredient }}</li>
+                        </ul>
+                    </div>
+                    <button class="red" v-on:click="showDescription(article, false)">Fermer la recette</button>
                 </div>
                 <div v-else>
-                    <button v-on:click="showDescription(article, true)">Open the description</button>
+                    <button class="blue" v-on:click="showDescription(article, true)">Voir la recette</button>
                 </div>
-
-                <span v-show="article.editing">Hit enter to update</span>
-
+                <span class="deleteButton" title="Supprimer cette recette ?" v-on:click="deleteArticle(article.id)">X</span>
             </div>
-
         </div>
 
 
@@ -30,9 +27,9 @@
 
 
             <p>
-                <strong>All Caught Up</strong>
-                <br/>
-                You do not have any article items</p>
+                <strong>Aucun article</strong>
+                <br/>Il n'y a aucun article ...
+            </p>
 
         </div>
 
@@ -73,9 +70,14 @@
                 this.$forceUpdate()
             },
 
+            ErrorImage(path) {
+                console.log('problem with image');
+                console.log(path);
+            },
+
             fetchArticle() {
 
-                let uri = 'http://localhost:4000/api/all';
+                let uri = '/api/all';
 
                 axios.get(uri).then((response) => {
                     try {
@@ -94,12 +96,11 @@
 
             updateArticle(article) {
 
-                let id = article._id;
-
-                let uri = 'http://localhost:4000/api/update/' + id;
-
-                article.editing = false;
-
+                let uri = '/api/update/' + article.title;
+                var bodyFormData = new FormData();
+                bodyFormData.set('title', article.title);
+                bodyFormData.set('description', article.description);
+                bodyFormData.append('file', article.file);
                 axios.post(uri, article).then((response) => {
 
                     console.log(response);
@@ -115,7 +116,7 @@
 
             deleteArticle(id) {
 
-                let uri = 'http://localhost:4000/api/delete/' + id;
+                let uri = '/api/delete/' + id;
 
                 axios.get(uri);
 

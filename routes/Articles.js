@@ -1,27 +1,18 @@
-var mongoose = require('mongoose')
-// Define collection and schema for todo item
 
-var article = new mongoose.Schema({
-    title: {
-      type: String
-    },
-
-    description: {
-      type: String
-    },
-
-    picturePath: {
-      type: String
-    },
-  
-    done: {
-      type: Boolean
-    }
+var articles = [{
+    id: 0,
+    title: "Tarte aux fraises",
+    description: "Une description de tarte aux fraises",
+    picturePath: "/images/tarteauxfraises.jpg",
+    ingredients: ["Sucre","Oeuf","Beurre", "Lait"]
   },
+  {
+    id: 1,
+    title: "Tarte aux citrons",
+    description: "Une description citronnée",
+    picturePath: "/images/tarteauxcitrons.jfif",
+    ingredients: ["Sucre","Oeuf","Beurre"]
+  }
+]
   
-    {
-      collection: 'articles'
-    }
-  )
-  
-  module.exports = mongoose.model('Article', article)
+module.exports = articles;

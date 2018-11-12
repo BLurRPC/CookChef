@@ -9,18 +9,10 @@ var morgan = require('morgan')
 
 var path = require('path')
 
-var app = express()
-
-var mongoose = require('mongoose')
-
 var bodyParser = require('body-parser')
 
-// Require configuration file defined in app/Config.js
-var config = require('./routes/config')
-
-// Connect to database
-mongoose.connect(config.DB)
-
+var app = express()
+ 
 // Sends static files  from the public path directory
 app.use(express.static(path.join(__dirname, '/public')))
 
@@ -31,7 +23,7 @@ app.use(bodyParser.json())
 
 app.use(bodyParser.urlencoded({extended: true}))
 
-var port = config.APP_PORT || 4000
+var port = 4000
 
 app.listen(port) // Listen on port defined in config file
 
