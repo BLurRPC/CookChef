@@ -1,18 +1,15 @@
 <template>
-  <div id="app">
   
-    <div class="container">
-  
-      <div class="row col-md-6 offset-md-3">
-  
-        <create-article></create-article>
-  
-        <list-article></list-article>
-  
-      </div>
-  
+  <div class="container">
+
+    <div class="row col-md-6 offset-md-3">
+
+      <create-article></create-article>
+
+      <list-article></list-article>
+
     </div>
-  
+
   </div>
 </template>
 
@@ -26,7 +23,7 @@
   
   export default {
   
-    name: 'app',
+    name: 'recette',
   
     data() {
   
