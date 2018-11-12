@@ -10,8 +10,10 @@
   </head>
   <body>
     <div id='app'>
-      <navbar></navbar>
-      <recette></recette>
+      <navbar @signalabout="handleAbout"></navbar>
+      <login></login>
+      <recette v-show="!showabout"></recette>
+      <about v-show="showabout"></about>
       <myfooter></myfooter>
     </div>
     <script src="/build/bundle.js"></script>

@@ -1,19 +1,7 @@
-<!--/public/about.html -->
-
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <title>about</title>
-    <link rel="stylesheet" type="text/css" href="./stylesheets/topbar.css"/>
-    <link rel="stylesheet" href="./stylesheets/main.css"/>
-  </head>
-  <body>
-    <div id='app'>
-      <navbar></navbar>
-      <main class="content" role="main">
+<template>
+    <main class="content" role="main">
         <h3>About Us</h3>
-
+        
         <h1>L'EQUIPE <br>CookChef</h1>
               
         <p>Nous sommes une équipe de deux personnes rassemblées à Paris <br>et avons parcouru les 4 coins du globe à la recherche de recettes faciles à faire à la maison et faites pour les petits budgets.</p>
@@ -24,8 +12,18 @@
         
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis ratione blanditiis vero rem cupiditate magni praesentium veniam quibusdam dicta recusandae? Fugit fuga debitis inventore possimus distinctio perferendis.</p>
       </main>
-      <myfooter></myfooter>
-      <script src="/build/bundle.js"></script>
-    </div>
-  </body>
-</html>
+</template>
+
+<script>
+  
+  export default {
+  
+    name: 'about',
+  
+    data() {
+  
+      return {}
+  
+    }  
+  }
+</script>
