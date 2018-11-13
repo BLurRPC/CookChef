@@ -1,14 +1,19 @@
 <template>
-    <form action="/login" method = "POST">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Login" name="email">
-            <input type="text" class="form-control" placeholder="Mot de passe" name="password">
-            <button type="submit">Login</button>
-        </div>
-    </form>
+	<div class="navbar2">
+		<form class="form-control" @submit.prevent @submit="login()">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Login" v-model="email">
+				<input type="text" class="form-control" placeholder="Mot de passe" v-model="password">
+				<button type="submit">Login</button>
+			</div>
+		</form>
+	</div>
 </template>
 
-<script>	
+<script>
+	import axios from 'axios';
+	import bus from "./../bus.js";
+	
 	export default {
         name: 'login',
 
@@ -28,34 +33,31 @@
 			}
 			return false;
 		},
-
-		login(event) {
-			if (event) event.preventDefault();
+		login() {
+			var refresh = false;
 			if(this.checkForm()) {
-			let url = '/login';
-			var bodyFormData = new FormData();
-			bodyFormData.set('email', this.email);
-			bodyFormData.set('password', this.password);
-			axios.post(url, bodyFormData).then((response) => {
-				console.log(response);
-				this.clearLogin();
-				this.refreshLogin();
-			}).catch((error) => {
-				console.log(error);
-		
-			})
-	
-			}
-		},
+				let url = '/login';
+				var bodyFormData = new FormData();
+				bodyFormData.set('email', this.email);
+				bodyFormData.set('password', this.password);
+				axios.post(url, {'email': this.email, 'password': this.password}).then((response) => {
+					if(response.data == "logged in") {
+						console.log("signal loggedin sent")
+						bus.$emit("loggedin", true);
+					}
+					this.clearLogin();
+				}).catch((error) => {
+					console.log(error);
+					})
+				}
+			},
+	  
 		clearLogin() {  
 			this.email = '';
 			this.password = '';
-		},
-		refreshArticle() {
-			bus.$emit("refreshLogin");	
-		}	
+			}
 		}
 	
 	
 	}
-	</script>
+</script>

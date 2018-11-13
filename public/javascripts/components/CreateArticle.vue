@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div v-show="isconnected" class="main">
   
     <h2>Créer une nouvelle recette !  </h2>
   
@@ -44,9 +44,14 @@
         file: '',
         ingredient: '',
         ingredients: [],
-        errors: []
+        errors: [],
+        isconnected: false
       }
   
+    },
+
+    created: function () {
+        this.listenToEvents();
     },
   
     methods: {
@@ -98,7 +103,7 @@
       addArticle(event) {
         if (event) event.preventDefault();
         if(this.checkForm()) {
-          let url = '/api/add';
+          let url = '/add';
           var bodyFormData = new FormData();
           bodyFormData.set('title', this.title);
           bodyFormData.set('description', this.description);
@@ -126,17 +131,20 @@
         this.ingredients = [];
         this.errors = [];
       },
-  
-  
-  
+
+      listenToEvents() {
+         bus.$on('loggedin', ($event) => {
+          this.isconnected = true;
+          console.log("show connected2 : " + this.isconnected)
+        })
+        bus.$on('loggedout', ($event) => {
+          this.isconnected = false;
+          console.log("show connected2 : " + this.isconnected)
+        })
+      },
+
       refreshArticle() {
-  
-  
-  
-        bus.$emit("refreshArticle");
-  
-  
-  
+        bus.$emit("refreshArticle");  
       }
   
   

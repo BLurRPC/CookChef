@@ -2,7 +2,7 @@
     <div>
         <h3 class="allArticles">Toutes nos recettes</h3>
         <div class="main" v-show="articles.length>0">
-            <div class="item" v-for="article in articles" :key="article.id">   
+            <div class="item" v-for="article in articles" :key="article.id">
                 <h1>{{article.title}}</h1>
                 <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
                 <div v-if="article.show">
@@ -77,10 +77,11 @@
 
             fetchArticle() {
 
-                let uri = '/api/all';
-
+                let uri = '/all';
+                console.log("ok")
                 axios.get(uri).then((response) => {
                     try {
+                        console.log("ok 2")
                         this.articles = response.data;
                         console.log(JSON.parse(JSON.stringify(this.articles)));
                         for(var i=0; i<this.articles.length; i++) {
@@ -96,7 +97,7 @@
 
             updateArticle(article) {
 
-                let uri = '/api/update/' + article.title;
+                let uri = '/update/' + article.title;
                 var bodyFormData = new FormData();
                 bodyFormData.set('title', article.title);
                 bodyFormData.set('description', article.description);
@@ -116,7 +117,7 @@
 
             deleteArticle(id) {
 
-                let uri = '/api/delete/' + id;
+                let uri = '/delete/' + id;
 
                 axios.get(uri);
 

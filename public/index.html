@@ -10,8 +10,8 @@
   </head>
   <body>
     <div id='app'>
-      <navbar @signalabout="handleAbout"></navbar>
-      <login></login>
+      <navbar @signallogin="handleLogin" @signalabout="handleAbout"></navbar>
+      <login v-show="showlogin"></login>
       <recette v-show="!showabout"></recette>
       <about v-show="showabout"></about>
       <myfooter></myfooter>

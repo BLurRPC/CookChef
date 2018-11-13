@@ -1,19 +1,12 @@
 'use strict'
 
-var express = require('express')
-
-var articleRoutes = express.Router()
-
-var Articles = require('./Articles')
-
+var express = require('express');
+var articleRoutes = express.Router();
+var Articles = require('./Articles');
 var multer = require('multer');
-
-var path = require('path')
-
+var path = require('path');
 var crypto = require('crypto');
-
 const fs = require('fs');
-
 var storage = multer.diskStorage({
   destination: path.join(__dirname, '../public/images'),
   filename: function (req, file, cb) {
@@ -24,10 +17,57 @@ var storage = multer.diskStorage({
     })
   }
 })
-
 var upload = multer({ storage: storage })
 
+const users = [
+  {id: '2f24vvg', email: 'test@test.com', password: 'password'}
+]
+
+// Server index.html page when request to the root is made
+articleRoutes.route('/').get(function (req, res) {
+  res.sendfile('./public/index.html')
+})
+
+articleRoutes.route('/sessionStatus').get(function(req, res) {
+  if (req.session && req.session.user === users[0].email && req.session.admin) {
+    res.send("admin")
+  }
+  else {
+    res.send("notadmin")
+  }
+})
+
 // get all articles in the db
+// Authentication and Authorization Middleware
+var auth = function(req, res, next) {
+  if (req.session && req.session.user === users[0].email && req.session.admin)
+    return next();
+  else
+    return res.sendStatus(401);
+};
+
+articleRoutes.route('/login').post(function(req, res) {
+  console.log('Inside POST /login callback')
+  console.log(req.body)
+  if(!req.body.email || !req.body.password) {
+    res.send('failed to log in')
+  }
+  else if(req.body.email == users[0].email && req.body.password == users[0].password) {
+    console.log("Logged in")
+    req.session.user = users[0].email
+    req.session.admin = true
+    res.send('logged in')
+  }
+  else {
+    res.send('failed to log in')
+  }
+})
+
+// Logout endpoint
+articleRoutes.route('/logout').get(function (req, res) {
+  req.session.destroy();
+  res.send("logout success!");
+});
 
 articleRoutes.route('/all').get(function (req, res, next) {
     res.json(Articles) // return all articles

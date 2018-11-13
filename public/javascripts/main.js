@@ -7,6 +7,8 @@ import Recette from './components/Recette.vue'
 import Navbar from './components/Navbar.vue'
 import About from './components/About.vue'
 import Login from './components/Login.vue'
+import axios from 'axios';
+import bus from "./bus.js";
 
 Vue.component('myfooter', MyFooter)
 Vue.component('navbar', Navbar)
@@ -19,15 +21,41 @@ new Vue({
   },
   components: {Recette},
   data: {
-    showabout: false
+    showabout: false,
+    showlogin: false
+  },
+
+  created: function () {
+    this.listenToEvents();
+    this.checkIfLogged();
   },
 
   methods: {
     handleAbout(enable) {
-      console.log("ca marche")
       this.showabout = enable;
-      console.log(enable)
-      console.log(this.showabout)
-    }
+      console.log("show about : " + this.showabout)
+    },
+    handleLogin(enable) {
+      this.showlogin = enable;
+      console.log("showlogin : " + this.showlogin)
+    },
+    checkIfLogged(){
+      axios.get('/sessionStatus')
+          .then(response => {
+            console.log(response)
+            if(response.data == "admin") {
+              bus.$emit("loggedin")
+            }
+          })
+          .catch(error => {
+            console.log("error")
+          });
+    },
+    listenToEvents() {
+      bus.$on('loggedin', ($event) => {
+       this.showlogin = false;
+       console.log("show login : " + this.showlogin)
+     })
+   }
   }
 })
