@@ -1,28 +1,22 @@
 <template>
   <!-- Footer -->
-  <footer class="fixed_footer">
-    <div class="row">
-      <h2>A PROPOS</h2>
-      <p>
-        <strong>CookChef</strong> est un site de recettes faciles à faire à la maison.
-      </p>
-      <p>
-        Incrivez-vous à notre <strong>Newsletter</strong> pour recevoir chaque semaine des idées gourmandes, abonnez-vous à nos réseaux-sociaux <strong>(facebook, Instagram, Twitter, Snapchat)</strong> pour nous suivre au jour le jour.
-      </p>
-      <h4>NOUS CONTACTER</h4>
-      <p><i class="fa fa-map-marker"></i> 10 Rue Vésale, 75005 Paris
-      </p>
-      <p><i class="fa fa-phone"></i> 0 800 800 100
-      </p>
-      <p><i class="fa fa-envelope"></i> <a href="mailto:contact@cookchef.fr">contact@cookchef.fr</a>
-      </p> 
-      <p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs" onclick="window.open(this.href); return false;">Suivez nous !</a>
-      <p><i>CookChef, Apprenez et mangez.</i>
-      </p>
-      <p><a href="https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs" onclick="window.open(this.href); return false;"><i class="fa fa-facebook"></i></a>
-      </p>
-    </div>
-  </footer>
+  <div class="footer">
+    <div id="button"></div>
+    <div id="container">
+    <div id="cont">
+    <div class="footer_center">
+      <h2>CookChef, Apprenez et mangez</h2>
+      <strong>CookChef</strong> est un site de recettes faciles à faire à la maison.
+      <br>Incrivez-vous à notre <strong>Newsletter</strong> pour recevoir chaque semaine des idées gourmandes,
+      <br>abonnez-vous à nos réseaux-sociaux <strong>(facebook, Instagram, Twitter, Snapchat)</strong>
+      <br>pour nous suivre au jour le jour.
+      <br><strong>NOUS CONTACTER</strong>
+      <br><i class="fa fa-envelope"></i> <a href="mailto:contact@cookchef.fr">contact@cookchef.fr</a>
+      <br><i class="fa fa-facebook"></i><a href="https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs" onclick="window.open(this.href); return false;">Suivez nous !</a>
+  </div>
+  </div>
+</div>
+</div>
 </template>
 
 <script>
