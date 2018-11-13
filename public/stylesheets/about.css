@@ -1,0 +1,15 @@
+@charset "UTF-8";
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes|Patrick+Hand');
+
+.main2 {
+    text-align: center;
+    position: relative;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 4vh;
+    line-height: 4vh;
+}
+
+body {
+background-color: #9F9F9F;
+}

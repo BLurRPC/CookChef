@@ -9893,12 +9893,6 @@ module.exports = defaults;
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -11362,73 +11356,54 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "fixed_footer" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("h2", [_vm._v("A PROPOS")]),
-        _vm._v(" "),
-        _c("p", [
-          _c("strong", [_vm._v("CookChef")]),
-          _vm._v(" est un site de recettes faciles à faire à la maison.\n    ")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v("\n      Incrivez-vous à notre "),
-          _c("strong", [_vm._v("Newsletter")]),
-          _vm._v(
-            " pour recevoir chaque semaine des idées gourmandes, abonnez-vous à nos réseaux-sociaux "
-          ),
-          _c("strong", [_vm._v("(facebook, Instagram, Twitter, Snapchat)")]),
-          _vm._v(" pour nous suivre au jour le jour.\n    ")
-        ]),
-        _vm._v(" "),
-        _c("h4", [_vm._v("NOUS CONTACTER")]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fa fa-map-marker" }),
-          _vm._v(" 10 Rue Vésale, 75005 Paris\n    ")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fa fa-phone" }),
-          _vm._v(" 0 800 800 100\n    ")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fa fa-envelope" }),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "mailto:contact@cookchef.fr" } }, [
-            _vm._v("contact@cookchef.fr")
+    return _c("div", { staticClass: "footer" }, [
+      _c("div", { attrs: { id: "button" } }),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "container" } }, [
+        _c("div", { attrs: { id: "cont" } }, [
+          _c("div", { staticClass: "footer_center" }, [
+            _c("h2", [_vm._v("CookChef, Apprenez et mangez")]),
+            _vm._v(" "),
+            _c("strong", [_vm._v("CookChef")]),
+            _vm._v(
+              " est un site de recettes faciles à faire à la maison.\n      "
+            ),
+            _c("br"),
+            _vm._v("Incrivez-vous à notre "),
+            _c("strong", [_vm._v("Newsletter")]),
+            _vm._v(
+              " pour recevoir chaque semaine des idées gourmandes,\n      "
+            ),
+            _c("br"),
+            _vm._v("abonnez-vous à nos réseaux-sociaux "),
+            _c("strong", [_vm._v("(facebook, Instagram, Twitter, Snapchat)")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v("pour nous suivre au jour le jour.\n      "),
+            _c("br"),
+            _c("strong", [_vm._v("NOUS CONTACTER")]),
+            _vm._v(" "),
+            _c("br"),
+            _c("i", { staticClass: "fa fa-envelope" }),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "mailto:contact@cookchef.fr" } }, [
+              _vm._v("contact@cookchef.fr")
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _c("i", { staticClass: "fa fa-facebook" }),
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    "https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs",
+                  onclick: "window.open(this.href); return false;"
+                }
+              },
+              [_vm._v("Suivez nous !")]
+            )
           ])
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fa fa-facebook" }),
-          _c(
-            "a",
-            {
-              attrs: {
-                href:
-                  "https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs",
-                onclick: "window.open(this.href); return false;"
-              }
-            },
-            [_vm._v("Suivez nous !")]
-          )
-        ]),
-        _c("p", [_c("i", [_vm._v("CookChef, Apprenez et mangez.")])]),
-        _vm._v(" "),
-        _c("p", [
-          _c(
-            "a",
-            {
-              attrs: {
-                href:
-                  "https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs",
-                onclick: "window.open(this.href); return false;"
-              }
-            },
-            [_c("i", { staticClass: "fa fa-facebook" })]
-          )
         ])
       ])
     ])
@@ -13189,30 +13164,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("main", { staticClass: "content", attrs: { role: "main" } }, [
-      _c("h3", [_vm._v("About Us")]),
-      _vm._v(" "),
-      _c("h1", [_vm._v("L'EQUIPE "), _c("br"), _vm._v("CookChef")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Nous sommes une équipe de deux personnes rassemblées à Paris "),
+    return _c("body", [
+      _c("div", { staticClass: "main2" }, [
+        _c("h3", [_vm._v("About Us")]),
+        _vm._v(" "),
+        _c("h1", [_vm._v("L'EQUIPE "), _c("br"), _vm._v("CookChef")]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Nous sommes une équipe de deux personnes rassemblées à Paris \r\n    "
+          ),
+          _c("br"),
+          _vm._v(
+            "et avons parcouru les 4 coins du globe à la recherche de recettes faciles \r\n    "
+          ),
+          _c("br"),
+          _vm._v("à faire à la maison et faites pour les petits budgets.")
+        ]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Lire La Story")]),
+        _vm._v(
+          "\r\n    Tout a commencé à Paris en septmebre 2018, 2 esiearques loin d'être des experts en cuisine.\r\n    "
+        ),
+        _c("br"),
+        _vm._v("Connaissant le budget limité des étudiants, \r\n    "),
         _c("br"),
         _vm._v(
-          "et avons parcouru les 4 coins du globe à la recherche de recettes faciles à faire à la maison et faites pour les petits budgets."
-        )
-      ]),
-      _vm._v(" "),
-      _c("h2", [_vm._v("Lire La Story")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet eum aspernatur quibusdam ad provident molestiae adipisci numquam vitae molestias quidem vero nostrum voluptates harum! Vero veniam adipisci minima corporis quidem sunt omnis illum similique consectetur enim atque autem distinctio quas deserunt ex amet itaque ipsa cumque sed asperiores doloremque aliquid praesentium nihil tenetur cum aliquam."
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis ratione blanditiis vero rem cupiditate magni praesentium veniam quibusdam dicta recusandae? Fugit fuga debitis inventore possimus distinctio perferendis."
+          "ont eu l'idée de faire partager des recettes abordables tout en s'amusant.\r\n    "
         )
       ])
     ])
