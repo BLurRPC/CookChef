@@ -134,11 +134,7 @@
 
       listenToEvents() {
          bus.$on('loggedin', ($event) => {
-          this.isconnected = true;
-          console.log("show connected2 : " + this.isconnected)
-        })
-        bus.$on('loggedout', ($event) => {
-          this.isconnected = false;
+          this.isconnected = $event;
           console.log("show connected2 : " + this.isconnected)
         })
       },

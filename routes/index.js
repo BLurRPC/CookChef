@@ -66,7 +66,7 @@ articleRoutes.route('/login').post(function(req, res) {
 // Logout endpoint
 articleRoutes.route('/logout').get(function (req, res) {
   req.session.destroy();
-  res.send("logout success!");
+  res.redirect('/')
 });
 
 articleRoutes.route('/all').get(function (req, res, next) {
@@ -74,8 +74,14 @@ articleRoutes.route('/all').get(function (req, res, next) {
   })
 
 // create an article item
-articleRoutes.route('/add').post(upload.any(), function (req, res) {
-  const id = Articles[Articles.length-1].id + 1 //Add A to the new article id
+articleRoutes.route('/add').post(upload.any(), auth, function (req, res) {
+  var id = 0;
+  if(Articles.length>0) {
+    id = Articles[Articles.length-1].id + 1 //Add A to the new article id
+  }
+  else {
+    id = 2;
+  }
   const title = req.body.title;
   const description = req.body.description;
   var ingredients = req.body.ingredients.split(",");
@@ -91,15 +97,17 @@ articleRoutes.route('/add').post(upload.any(), function (req, res) {
 
 // delete an article item
 
-articleRoutes.route('/delete/:id').get(function (req, res, next) {
+articleRoutes.route('/delete/:id').get(auth, function (req, res, next) {
   var id = req.params.id
   for(var i=0; i< Articles.length; i++)
   {
     if(Articles[i].id == id) {
-      fs.unlink("./public" + Articles[i].picturePath, (err) => { //Remove picture from memory
-        if (err) throw err;
-        console.log('successfully deleted picture');
-      });
+      if(id!=0 && id!=1) { //Prevent from deleting the first two pictures from memory
+        fs.unlink("./public" + Articles[i].picturePath, (err) => { //Remove picture from memory
+          if (err) throw err;
+          console.log('successfully deleted picture');
+        });
+      }
       Articles.splice(i, 1); //Remove from array
     }
   }
@@ -108,7 +116,7 @@ articleRoutes.route('/delete/:id').get(function (req, res, next) {
 
 // perform update on article item
 
-articleRoutes.route('/update/:id').post(function (req, res, next) {
+articleRoutes.route('/update/:id').post(auth, function (req, res, next) {
   var title = req.params.id
   for(var i=0; i< Articles.length; i++)
   {

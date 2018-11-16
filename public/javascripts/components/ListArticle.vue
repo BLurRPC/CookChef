@@ -6,7 +6,8 @@
                 <h1>{{article.title}}</h1>
                 <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
                 <div v-if="article.show">
-                    <input type="text" class="form-control" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
+                    <input type="text" class="form-control" v-show="isconnected" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
+                    <p v-show="!isconnected">{{article.description}}</p>
                     <div class="ingredients">
                         <h4>Liste des ingrédients requis :</h4>
                         <ul>
@@ -18,7 +19,7 @@
                 <div v-else>
                     <button class="blue" v-on:click="showDescription(article, true)">Voir la recette</button>
                 </div>
-                <span class="deleteButton" title="Supprimer cette recette ?" v-on:click="deleteArticle(article.id)">X</span>
+                <span v-show="isconnected" class="deleteButton" title="Supprimer cette recette ?" v-on:click="deleteArticle(article.id)">X</span>
             </div>
         </div>
 
@@ -48,7 +49,8 @@
         data() {
 
             return {
-                articles: []
+                articles: [],
+                isconnected: false
             }
 
         },
@@ -78,10 +80,8 @@
             fetchArticle() {
 
                 let uri = '/all';
-                console.log("ok")
                 axios.get(uri).then((response) => {
                     try {
-                        console.log("ok 2")
                         this.articles = response.data;
                         console.log(JSON.parse(JSON.stringify(this.articles)));
                         for(var i=0; i<this.articles.length; i++) {
@@ -133,6 +133,10 @@
 
                 })
 
+                bus.$on('loggedin', ($event) => {
+                    this.isconnected = $event;
+                    console.log("show connected3 : " + this.isconnected)
+                })
             }
 
         }

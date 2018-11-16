@@ -484,6 +484,12 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(30);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -498,12 +504,6 @@ module.exports = function normalizeComponent (
 const bus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 
 /* harmony default export */ __webpack_exports__["a"] = (bus);
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(30);
 
 /***/ }),
 /* 4 */
@@ -10267,9 +10267,9 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(3);
 //
 //
 //
@@ -10400,11 +10400,7 @@ function applyToTag (styleElement, obj) {
 
     listenToEvents() {
       __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
-        this.isconnected = true;
-        console.log("show connected2 : " + this.isconnected);
-      });
-      __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedout', $event => {
-        this.isconnected = false;
+        this.isconnected = $event;
         console.log("show connected2 : " + this.isconnected);
       });
     },
@@ -10881,9 +10877,10 @@ module.exports = Cancel;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(3);
+//
 //
 //
 //
@@ -10933,7 +10930,8 @@ module.exports = Cancel;
     data() {
 
         return {
-            articles: []
+            articles: [],
+            isconnected: false
         };
     },
 
@@ -10960,10 +10958,8 @@ module.exports = Cancel;
         fetchArticle() {
 
             let uri = '/all';
-            console.log("ok");
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(uri).then(response => {
                 try {
-                    console.log("ok 2");
                     this.articles = response.data;
                     console.log(JSON.parse(JSON.stringify(this.articles)));
                     for (var i = 0; i < this.articles.length; i++) {
@@ -11006,6 +11002,11 @@ module.exports = Cancel;
 
                 this.fetchArticle(); //update article
             });
+
+            __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
+                this.isconnected = $event;
+                console.log("show connected3 : " + this.isconnected);
+            });
         }
 
     }
@@ -11017,7 +11018,9 @@ module.exports = Cancel;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(3);
 //
 //
 //
@@ -11030,6 +11033,7 @@ module.exports = Cancel;
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -11071,12 +11075,16 @@ module.exports = Cancel;
       console.log("Logged out");
       this.login = false;
       this.isconnected = false;
-      __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$emit("loggedout");
+      let url = '/logout';
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).catch(error => {
+        console.log(error);
+      });
+      __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$emit("loggedin", false);
     },
 
     listenToEvents() {
-      __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('loggedin', $event => {
-        this.isconnected = true;
+      __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
+        this.isconnected = $event;
         console.log("show connected : " + this.isconnected);
       });
     }
@@ -11121,9 +11129,9 @@ module.exports = Cancel;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus_js__ = __webpack_require__(3);
 //
 //
 //
@@ -11159,7 +11167,6 @@ module.exports = Cancel;
 			return false;
 		},
 		login() {
-			var refresh = false;
 			if (this.checkForm()) {
 				let url = '/login';
 				var bodyFormData = new FormData();
@@ -11198,9 +11205,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Navbar_vue__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_About_vue__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Login_vue__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__bus_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__bus_js__ = __webpack_require__(3);
 
 
 
@@ -12788,6 +12795,12 @@ var render = function() {
                 _c("input", {
                   directives: [
                     {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isconnected,
+                      expression: "isconnected"
+                    },
+                    {
                       name: "model",
                       rawName: "v-model",
                       value: article.description,
@@ -12816,6 +12829,21 @@ var render = function() {
                   }
                 }),
                 _c("br"),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.isconnected,
+                        expression: "!isconnected"
+                      }
+                    ]
+                  },
+                  [_vm._v(_vm._s(article.description))]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "ingredients" }, [
                   _c("h4", [_vm._v("Liste des ingrédients requis :")]),
@@ -12859,6 +12887,14 @@ var render = function() {
           _c(
             "span",
             {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isconnected,
+                  expression: "isconnected"
+                }
+              ],
               staticClass: "deleteButton",
               attrs: { title: "Supprimer cette recette ?" },
               on: {

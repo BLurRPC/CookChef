@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import bus from "./../bus.js";
   export default {
   
@@ -52,12 +53,16 @@
         console.log("Logged out")
         this.login = false
         this.isconnected = false
-        bus.$emit("loggedout")
+        let url = '/logout';
+        axios.get(url).catch((error) => {
+					console.log(error);
+        })
+        bus.$emit("loggedin", false);
       },
 
       listenToEvents() {
         bus.$on('loggedin', ($event) => {
-          this.isconnected = true;
+          this.isconnected = $event;
           console.log("show connected : " + this.isconnected)
         })
       }

@@ -10,7 +10,7 @@ var articles = [{
     id: 1,
     title: "Tarte aux citrons",
     description: "Une description citronnée",
-    picturePath: "/images/tarteauxcitrons.jfif",
+    picturePath: "/images/tarteauxcitrons.jpg",
     ingredients: ["Sucre","Oeuf","Beurre"]
   }
 ]

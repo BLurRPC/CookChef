@@ -34,7 +34,6 @@
 			return false;
 		},
 		login() {
-			var refresh = false;
 			if(this.checkForm()) {
 				let url = '/login';
 				var bodyFormData = new FormData();
