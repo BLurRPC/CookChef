@@ -4,20 +4,18 @@
         <div class="main" v-show="articles.length>0">
             <div class="item" v-for="article in articles" :key="article.id">
                 <h1>{{article.title}}</h1>
-                <img :src="article.picturePath" @error="ErrorImage(article.picturePath)"><br/>
+                <img :src="article.picturePath" @error="ErrorImage(article.picturePath)" v-on:click="showDescription(article)"><br/>
                 <div v-if="article.show">
-                    <input type="text" class="form-control" v-show="isconnected" v-model="article.description" @keyup.enter="updateArticle(article)"><br/>
-                    <p v-show="!isconnected">{{article.description}}</p>
+                    <div v-for="(etape, index) in article.description" :key="etape.id">
+                        <p>Etape {{index + 1}} : {{etape}}</p>
+                        <input type="text" class="form-control" placeholder="Ecrivez ici pour modifier cette étape puis appuyez sur Entrée !" v-show="isconnected" v-model="etapeUpdate" @keyup.enter="updateEtape(index, article)">
+                    </div>
                     <div class="ingredients">
                         <h4>Liste des ingrédients requis :</h4>
                         <ul>
                             <li v-for="ingredient in article.ingredients">{{ ingredient }}</li>
                         </ul>
                     </div>
-                    <button class="red" v-on:click="showDescription(article, false)">Fermer la recette</button>
-                </div>
-                <div v-else>
-                    <button class="blue" v-on:click="showDescription(article, true)">Voir la recette</button>
                 </div>
                 <span v-show="isconnected" class="deleteButton" title="Supprimer cette recette ?" v-on:click="deleteArticle(article.id)">X</span>
             </div>
@@ -56,19 +54,15 @@
         },
 
         created: function () {
-
             this.fetchArticle();
-
             this.listenToEvents();
-
         },
 
 
         methods: {
 
-            showDescription(article, status) {
-                article.show = status;
-                console.log(JSON.parse(JSON.stringify(article)));
+            showDescription(article) {
+                article.show = !article.show;
                 this.$forceUpdate()
             },
 
@@ -83,7 +77,6 @@
                 axios.get(uri).then((response) => {
                     try {
                         this.articles = response.data;
-                        console.log(JSON.parse(JSON.stringify(this.articles)));
                         for(var i=0; i<this.articles.length; i++) {
                             this.articles[i].show = false;
                         }
@@ -95,23 +88,23 @@
 
             },
 
-            updateArticle(article) {
+            updateEtape(index, article) {
+                if (this.etapeUpdate !== undefined && this.etapeUpdate!='') {
+                    console.log("etape id : " + index);
+                    console.log("etape : " + this.etapeUpdate);
+                    let uri = '/update/' + article.id;
+                    axios.post(uri, {'etape': this.etapeUpdate, 'index': index}).then((response) => {
 
-                let uri = '/update/' + article.title;
-                var bodyFormData = new FormData();
-                bodyFormData.set('title', article.title);
-                bodyFormData.set('description', article.description);
-                bodyFormData.append('file', article.file);
-                axios.post(uri, article).then((response) => {
+                        console.log(response);
+                        this.etapeUpdate= '';
+                        this.fetchArticle();
 
-                    console.log(response);
+                    }).catch((error) => {
 
-                }).catch((error) => {
+                        console.log(error);
 
-                    console.log(error);
-
-                })
-
+                    })
+                }
             },
 
 
@@ -135,7 +128,6 @@
 
                 bus.$on('loggedin', ($event) => {
                     this.isconnected = $event;
-                    console.log("show connected3 : " + this.isconnected)
                 })
             }
 

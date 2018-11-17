@@ -36,21 +36,17 @@
     methods: {
       handleAbout() {
         this.showabout=true
-        console.log("signal About sent")
         this.$emit('signalabout', this.showabout)
       },
       handleIndex() {
         this.showabout=false
-        console.log("signal Index sent")
         this.$emit('signalabout', this.showabout)
       },
       handleLogin() {
-        console.log("signal Login sent")
         this.login = !this.login
         this.$emit('signallogin', this.login)
       },
       handleLogout() {
-        console.log("Logged out")
         this.login = false
         this.isconnected = false
         let url = '/logout';
@@ -63,7 +59,6 @@
       listenToEvents() {
         bus.$on('loggedin', ($event) => {
           this.isconnected = $event;
-          console.log("show connected : " + this.isconnected)
         })
       }
     }

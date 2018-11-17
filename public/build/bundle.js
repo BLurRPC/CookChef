@@ -10304,6 +10304,11 @@ function applyToTag (styleElement, obj) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -10312,7 +10317,8 @@ function applyToTag (styleElement, obj) {
   data() {
     return {
       title: '',
-      description: '',
+      etape: '',
+      description: [],
       file: '',
       ingredient: '',
       ingredients: [],
@@ -10328,7 +10334,7 @@ function applyToTag (styleElement, obj) {
   methods: {
 
     checkForm() {
-      if (this.title && this.description && this.file && this.ingredients.length > 0) {
+      if (this.title && this.file && this.ingredients.length > 0 && this.description.length > 0) {
         //Check if form fields are not empty
         return true;
       }
@@ -10346,24 +10352,38 @@ function applyToTag (styleElement, obj) {
       if (this.ingredients.length == 0) {
         this.errors.push('Votre recette a besoin d\'au moins un ingrédient !');
       }
+      if (this.description.length == 0) {
+        this.errors.push('Votre recette a besoin d\'au moins une étape !');
+      }
       return false;
     },
 
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-      console.log(this.file);
     },
 
     handleIngredient() {
       if (this.ingredient) {
         this.ingredient = this.ingredient.charAt(0).toUpperCase() + this.ingredient.substr(1).toLowerCase();
-        console.log("ok " + this.ingredient);
         if (!this.ingredients.includes(this.ingredient)) {
           this.ingredients.push(this.ingredient);
-          console.log("Added " + this.ingredients);
           this.ingredient = '';
         } else {
-          console.log(this.ingredient + "already added.");
+          console.log(this.ingredient + " already added.");
+        }
+      } else {
+        console.log("field is empty.");
+      }
+    },
+
+    handleEtape() {
+      if (this.etape) {
+        this.etape = this.etape.charAt(0).toUpperCase() + this.etape.substr(1).toLowerCase();
+        if (!this.description.includes(this.etape)) {
+          this.description.push(this.etape);
+          this.etape = '';
+        } else {
+          console.log(this.etape + " already added.");
         }
       } else {
         console.log("field is empty.");
@@ -10380,7 +10400,6 @@ function applyToTag (styleElement, obj) {
         bodyFormData.set('ingredients', this.ingredients);
         bodyFormData.append('file', this.file);
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, bodyFormData).then(response => {
-          console.log(response);
           this.clearArticle();
           this.refreshArticle();
         }).catch(error => {
@@ -10391,7 +10410,8 @@ function applyToTag (styleElement, obj) {
 
     clearArticle() {
       this.title = '';
-      this.description = '';
+      this.etape = '';
+      this.description = [];
       this.picturePath = '';
       this.ingredient = '';
       this.ingredients = [];
@@ -10401,7 +10421,6 @@ function applyToTag (styleElement, obj) {
     listenToEvents() {
       __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
         this.isconnected = $event;
-        console.log("show connected2 : " + this.isconnected);
       });
     },
 
@@ -10918,8 +10937,6 @@ module.exports = Cancel;
 //
 //
 //
-//
-//
 
 
 
@@ -10936,17 +10953,14 @@ module.exports = Cancel;
     },
 
     created: function () {
-
         this.fetchArticle();
-
         this.listenToEvents();
     },
 
     methods: {
 
-        showDescription(article, status) {
-            article.show = status;
-            console.log(JSON.parse(JSON.stringify(article)));
+        showDescription(article) {
+            article.show = !article.show;
             this.$forceUpdate();
         },
 
@@ -10961,7 +10975,6 @@ module.exports = Cancel;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(uri).then(response => {
                 try {
                     this.articles = response.data;
-                    console.log(JSON.parse(JSON.stringify(this.articles)));
                     for (var i = 0; i < this.articles.length; i++) {
                         this.articles[i].show = false;
                     }
@@ -10971,20 +10984,21 @@ module.exports = Cancel;
             });
         },
 
-        updateArticle(article) {
+        updateEtape(index, article) {
+            if (this.etapeUpdate !== undefined && this.etapeUpdate != '') {
+                console.log("etape id : " + index);
+                console.log("etape : " + this.etapeUpdate);
+                let uri = '/update/' + article.id;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(uri, { 'etape': this.etapeUpdate, 'index': index }).then(response => {
 
-            let uri = '/update/' + article.title;
-            var bodyFormData = new FormData();
-            bodyFormData.set('title', article.title);
-            bodyFormData.set('description', article.description);
-            bodyFormData.append('file', article.file);
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(uri, article).then(response => {
+                    console.log(response);
+                    this.etapeUpdate = '';
+                    this.fetchArticle();
+                }).catch(error => {
 
-                console.log(response);
-            }).catch(error => {
-
-                console.log(error);
-            });
+                    console.log(error);
+                });
+            }
         },
 
         deleteArticle(id) {
@@ -11005,7 +11019,6 @@ module.exports = Cancel;
 
             __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
                 this.isconnected = $event;
-                console.log("show connected3 : " + this.isconnected);
             });
         }
 
@@ -11058,21 +11071,17 @@ module.exports = Cancel;
   methods: {
     handleAbout() {
       this.showabout = true;
-      console.log("signal About sent");
       this.$emit('signalabout', this.showabout);
     },
     handleIndex() {
       this.showabout = false;
-      console.log("signal Index sent");
       this.$emit('signalabout', this.showabout);
     },
     handleLogin() {
-      console.log("signal Login sent");
       this.login = !this.login;
       this.$emit('signallogin', this.login);
     },
     handleLogout() {
-      console.log("Logged out");
       this.login = false;
       this.isconnected = false;
       let url = '/logout';
@@ -11085,7 +11094,6 @@ module.exports = Cancel;
     listenToEvents() {
       __WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$on('loggedin', $event => {
         this.isconnected = $event;
-        console.log("show connected : " + this.isconnected);
       });
     }
   }
@@ -11169,12 +11177,8 @@ module.exports = Cancel;
 		login() {
 			if (this.checkForm()) {
 				let url = '/login';
-				var bodyFormData = new FormData();
-				bodyFormData.set('email', this.email);
-				bodyFormData.set('password', this.password);
 				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, { 'email': this.email, 'password': this.password }).then(response => {
 					if (response.data == "logged in") {
-						console.log("signal loggedin sent");
 						__WEBPACK_IMPORTED_MODULE_1__bus_js__["a" /* default */].$emit("loggedin", true);
 					}
 					this.clearLogin();
@@ -11228,6 +11232,8 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
   created: function () {
     console.log('created');
+    this.listenToEvents();
+    this.checkIfLogged();
   },
   components: { Recette: __WEBPACK_IMPORTED_MODULE_2__components_Recette_vue__["a" /* default */] },
   data: {
@@ -11235,25 +11241,18 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     showlogin: false
   },
 
-  created: function () {
-    this.listenToEvents();
-    this.checkIfLogged();
-  },
-
   methods: {
     handleAbout(enable) {
       this.showabout = enable;
-      console.log("show about : " + this.showabout);
     },
     handleLogin(enable) {
       this.showlogin = enable;
-      console.log("showlogin : " + this.showlogin);
     },
     checkIfLogged() {
       __WEBPACK_IMPORTED_MODULE_6_axios___default.a.get('/sessionStatus').then(response => {
         console.log(response);
         if (response.data == "admin") {
-          __WEBPACK_IMPORTED_MODULE_7__bus_js__["a" /* default */].$emit("loggedin");
+          __WEBPACK_IMPORTED_MODULE_7__bus_js__["a" /* default */].$emit("loggedin", true);
         }
       }).catch(error => {
         console.log("error");
@@ -11261,8 +11260,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     },
     listenToEvents() {
       __WEBPACK_IMPORTED_MODULE_7__bus_js__["a" /* default */].$on('loggedin', $event => {
-        this.showlogin = false;
-        console.log("show login : " + this.showlogin);
+        if ($event == true) {
+          this.showlogin = false;
+        }
       });
     }
   }
@@ -12495,7 +12495,7 @@ var render = function() {
           expression: "isconnected"
         }
       ],
-      staticClass: "main"
+      staticClass: "main3"
     },
     [
       _c("h2", [_vm._v("Créer une nouvelle recette !  ")]),
@@ -12515,130 +12515,169 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.title,
-                  expression: "title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Titre de la recette" },
-              domProps: { value: _vm.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "form-group item" },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
                   }
-                  _vm.title = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.description,
-                  expression: "description"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "La recette" },
-              domProps: { value: _vm.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.description = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              ref: "file",
-              attrs: { type: "file", name: "file" },
-              on: {
-                change: function($event) {
-                  _vm.handleFileUpload()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.ingredient,
-                  expression: "ingredient"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Ajoutez un ingrédient" },
-              domProps: { value: _vm.ingredient },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.ingredient = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                attrs: { type: "button" },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Titre de la recette" },
+                domProps: { value: _vm.title },
                 on: {
-                  click: function($event) {
-                    _vm.handleIngredient()
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
                   }
                 }
-              },
-              [_vm._v("Ajoutez l'ingrédient à la liste des ingrédients")]
-            ),
-            _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [
-              _vm._v("Ajouter la recette")
-            ]),
-            _vm._v(" "),
-            _vm.ingredients.length
-              ? _c("p", [
-                  _c("b", [
-                    _vm._v("Liste des ingrédients pour cette recette :")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    _vm._l(_vm.ingredients, function(ingredient) {
-                      return _c("li", [_vm._v(_vm._s(ingredient))])
-                    })
-                  )
+              }),
+              _vm._v(" "),
+              _c("input", {
+                ref: "file",
+                attrs: {
+                  type: "file",
+                  name: "file",
+                  placeholder: "Image de votre recette"
+                },
+                on: {
+                  change: function($event) {
+                    _vm.handleFileUpload()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.etape,
+                    expression: "etape"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Ajoutez une étape à la recette"
+                },
+                domProps: { value: _vm.etape },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.etape = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.handleEtape()
+                    }
+                  }
+                },
+                [_vm._v("Ajoutez une étape à votre recette")]
+              ),
+              _vm._v(" "),
+              _vm.description.length
+                ? _c("p", [_c("b", [_vm._v("Etapes de la recette :")])])
+                : _vm._e(),
+              _vm._l(_vm.description, function(etape, index) {
+                return _c("p", [
+                  _vm._v("Etape " + _vm._s(index + 1) + " : " + _vm._s(etape))
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.errors.length
-              ? _c("p", [
-                  _c("b", [
-                    _vm._v("Veuillez corriger les erreur(s) suivantes :")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    _vm._l(_vm.errors, function(error) {
-                      return _c("li", [_vm._v(_vm._s(error))])
-                    })
-                  )
-                ])
-              : _vm._e()
-          ])
+              }),
+              _vm._v(" "),
+              _c("p"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.ingredient,
+                    expression: "ingredient"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Ajoutez un ingrédient à la recette"
+                },
+                domProps: { value: _vm.ingredient },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.ingredient = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.handleIngredient()
+                    }
+                  }
+                },
+                [_vm._v("Ajoutez cet ingrédient à votre recette")]
+              ),
+              _vm._v(" "),
+              _vm.ingredients.length
+                ? _c("p", [
+                    _c("b", [
+                      _vm._v("Liste des ingrédients pour cette recette :")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.ingredients, function(ingredient) {
+                        return _c("li", [_vm._v(_vm._s(ingredient))])
+                      })
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("button", { attrs: { type: "submit" } }, [
+                _vm._v("Ajouter la recette")
+              ]),
+              _vm._v(" "),
+              _vm.errors.length
+                ? _c("p", [
+                    _c("b", [
+                      _vm._v("Veuillez corriger les erreur(s) suivantes :")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function(error) {
+                        return _c("li", [_vm._v(_vm._s(error))])
+                      })
+                    )
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
         ]
       )
     ]
@@ -12785,104 +12824,89 @@ var render = function() {
             on: {
               error: function($event) {
                 _vm.ErrorImage(article.picturePath)
+              },
+              click: function($event) {
+                _vm.showDescription(article)
               }
             }
           }),
           _c("br"),
           _vm._v(" "),
           article.show
-            ? _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isconnected,
-                      expression: "isconnected"
-                    },
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: article.description,
-                      expression: "article.description"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: article.description },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      _vm.updateArticle(article)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(article, "description", $event.target.value)
-                    }
-                  }
-                }),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.isconnected,
-                        expression: "!isconnected"
-                      }
-                    ]
-                  },
-                  [_vm._v(_vm._s(article.description))]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "ingredients" }, [
-                  _c("h4", [_vm._v("Liste des ingrédients requis :")]),
+            ? _c(
+                "div",
+                [
+                  _vm._l(article.description, function(etape, index) {
+                    return _c("div", { key: etape.id }, [
+                      _c("p", [
+                        _vm._v(
+                          "Etape " + _vm._s(index + 1) + " : " + _vm._s(etape)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isconnected,
+                            expression: "isconnected"
+                          },
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.etapeUpdate,
+                            expression: "etapeUpdate"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder:
+                            "Ecrivez ici pour modifier cette étape puis appuyez sur Entrée !"
+                        },
+                        domProps: { value: _vm.etapeUpdate },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            _vm.updateEtape(index, article)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.etapeUpdate = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  }),
                   _vm._v(" "),
-                  _c(
-                    "ul",
-                    _vm._l(article.ingredients, function(ingredient) {
-                      return _c("li", [_vm._v(_vm._s(ingredient))])
-                    })
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "red",
-                    on: {
-                      click: function($event) {
-                        _vm.showDescription(article, false)
-                      }
-                    }
-                  },
-                  [_vm._v("Fermer la recette")]
-                )
-              ])
-            : _c("div", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "blue",
-                    on: {
-                      click: function($event) {
-                        _vm.showDescription(article, true)
-                      }
-                    }
-                  },
-                  [_vm._v("Voir la recette")]
-                )
-              ]),
+                  _c("div", { staticClass: "ingredients" }, [
+                    _c("h4", [_vm._v("Liste des ingrédients requis :")]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(article.ingredients, function(ingredient) {
+                        return _c("li", [_vm._v(_vm._s(ingredient))])
+                      })
+                    )
+                  ])
+                ],
+                2
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "span",

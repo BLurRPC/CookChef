@@ -36,12 +36,8 @@
 		login() {
 			if(this.checkForm()) {
 				let url = '/login';
-				var bodyFormData = new FormData();
-				bodyFormData.set('email', this.email);
-				bodyFormData.set('password', this.password);
 				axios.post(url, {'email': this.email, 'password': this.password}).then((response) => {
 					if(response.data == "logged in") {
-						console.log("signal loggedin sent")
 						bus.$emit("loggedin", true);
 					}
 					this.clearLogin();

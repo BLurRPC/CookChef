@@ -29,7 +29,7 @@ articleRoutes.route('/').get(function (req, res) {
 })
 
 articleRoutes.route('/sessionStatus').get(function(req, res) {
-  if (req.session && req.session.user === users[0].email && req.session.admin) {
+  if (req.session && req.session.user == users[0].email && req.session.admin) {
     res.send("admin")
   }
   else {
@@ -47,13 +47,10 @@ var auth = function(req, res, next) {
 };
 
 articleRoutes.route('/login').post(function(req, res) {
-  console.log('Inside POST /login callback')
-  console.log(req.body)
   if(!req.body.email || !req.body.password) {
     res.send('failed to log in')
   }
   else if(req.body.email == users[0].email && req.body.password == users[0].password) {
-    console.log("Logged in")
     req.session.user = users[0].email
     req.session.admin = true
     res.send('logged in')
@@ -83,10 +80,13 @@ articleRoutes.route('/add').post(upload.any(), auth, function (req, res) {
     id = 2;
   }
   const title = req.body.title;
-  const description = req.body.description;
+  const description = req.body.description.split(",");
   var ingredients = req.body.ingredients.split(",");
   for (var ingredient in ingredients) {
     ingredient = ingredient.charAt(0).toUpperCase() + ingredient.substr(1).toLowerCase();
+  }
+  for (var etape in description) {
+    etape = etape.charAt(0).toUpperCase() + etape.substr(1).toLowerCase();
   }
   const file = req.files[0];
   var path = "/images/" + file.filename;
@@ -97,7 +97,7 @@ articleRoutes.route('/add').post(upload.any(), auth, function (req, res) {
 
 // delete an article item
 
-articleRoutes.route('/delete/:id').get(auth, function (req, res, next) {
+articleRoutes.route('/delete/:id').get(auth, function (req, res) {
   var id = req.params.id
   for(var i=0; i< Articles.length; i++)
   {
@@ -116,15 +116,17 @@ articleRoutes.route('/delete/:id').get(auth, function (req, res, next) {
 
 // perform update on article item
 
-articleRoutes.route('/update/:id').post(auth, function (req, res, next) {
-  var title = req.params.id
+articleRoutes.route('/update/:id').post(auth, function (req, res) {
+  var etape = req.body.etape;
+  var index = req.body.index;
+  var id = req.params.id;
   for(var i=0; i< Articles.length; i++)
   {
-    if(Articles[i].title == title) {
-      Articles[i].description= req.body.description
+    if(Articles[i].id == id) {
+      Articles[i].description[index] = etape
+      res.json('Successfully updated')
     }
   }
-  res.json('Successfully removed')
 })
 
 module.exports = articleRoutes

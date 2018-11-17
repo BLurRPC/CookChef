@@ -17,7 +17,9 @@ Vue.component('login', Login)
 new Vue({
   el: '#app',
   created: function () {
-    console.log('created')
+    console.log('created');
+    this.listenToEvents();
+    this.checkIfLogged();
   },
   components: {Recette},
   data: {
@@ -25,26 +27,19 @@ new Vue({
     showlogin: false
   },
 
-  created: function () {
-    this.listenToEvents();
-    this.checkIfLogged();
-  },
-
   methods: {
     handleAbout(enable) {
       this.showabout = enable;
-      console.log("show about : " + this.showabout)
     },
     handleLogin(enable) {
       this.showlogin = enable;
-      console.log("showlogin : " + this.showlogin)
     },
     checkIfLogged(){
       axios.get('/sessionStatus')
           .then(response => {
             console.log(response)
             if(response.data == "admin") {
-              bus.$emit("loggedin")
+              bus.$emit("loggedin", true)
             }
           })
           .catch(error => {
@@ -53,8 +48,7 @@ new Vue({
     },
     listenToEvents() {
       bus.$on('loggedin', ($event) => {
-       this.showlogin = false;
-       console.log("show login : " + this.showlogin)
+        if($event == true){this.showlogin = false;}
      })
    }
   }
