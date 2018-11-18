@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="allArticles">Toutes nos recettes</h3>
+        <h3 class="allArticles">Toutes nos recettes de dessert</h3>
         <div class="main" v-show="articles.length>0">
             <div class="search-wrapper">
                 <input type="text" v-model="search" placeholder="Rechercher par titre de recette ..."/>

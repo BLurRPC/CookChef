@@ -9,8 +9,7 @@
       <br>à faire à la maison et faites pour les petits budgets.</p>
       <h3>Lire La Story</h3>
       Tout a commencé à Paris en septmebre 2018, 2 Esiearques loin d'être des experts en cuisine.
-      <br>Connaissant le budget limité des étudiants, 
-      <br>ont eu l'idée de faire partager des recettes abordables tout en s'amusant.
+      <br>Connaissant le budget limité des étudiants, nous vous partageons des recettes abordables tout en s'amusant.
     </div>
   </div>
 </body>  
