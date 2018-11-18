@@ -7,17 +7,17 @@
 
 /* Navbar Head*/
 .title {
-  font-size: 20px !important;
+  font-weight: 700;
 }
 
 /* Navbar links */
 .navbar a {
   float: left;
   text-align: center;
-  padding: 12px;
+  padding: 1.2vw;
   color: white;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 3.6vh;
 }
 
 /* Navbar links on mouse-over */

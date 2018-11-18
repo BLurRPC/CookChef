@@ -23,7 +23,7 @@
             <li v-for="ingredient in ingredients">{{ ingredient }}</li>
           </ul>
         </p>
-        <button type="submit">Ajouter la recette</button>
+        <button class="mainButton" type="submit">Ajouter la recette</button>
         <p v-if="errors.length">
           <b>Veuillez corriger les erreur(s) suivantes :</b>
           <ul>

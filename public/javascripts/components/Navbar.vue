@@ -1,11 +1,11 @@
 <template>
     <div class="navbar">
-          <a @click="handleIndex()">Home</a>
-          <a @click="handleAbout()">About</a>
+          <a class="title" @click="handleIndex()">CookChef</a>
+          <a @click="handleAbout()">Qui sommes-nous ?</a>
           <div class="topnav-right">
-            <a v-show="!isconnected" @click="handleLogin()">Login</a>
-            <a v-show="isconnected">Connected</a>
-            <a v-show="isconnected" @click="handleLogout()">Logout</a>
+            <a v-show="!isconnected" @click="handleLogin()">Se connecter</a>
+            <a v-show="isconnected">Vous êtes connecté</a>
+            <a v-show="isconnected" @click="handleLogout()">Se déconnecter</a>
           </div>
       </div>
 </template>

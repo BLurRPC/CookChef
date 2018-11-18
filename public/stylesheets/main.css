@@ -47,7 +47,7 @@ body {
         align-items: center;
         justify-content: center;
         flex-grow: 1;
-        flex-basis: 22%;
+        flex-basis: 28%;
         margin: 1vh 1vw 1vh 1vw;
     }
     .main3 h2 { 
@@ -124,7 +124,21 @@ body {
     .item button {
         margin-top: 2vh;
         text-decoration: none;
-        color:rgb(229, 197, 255);
+        color:#d54d7b;
+        padding: 1vh 3vw;
+        display: inline-block;
+        position: relative;
+        border: 0.1vh solid rgba(0,0,0,0.21);
+        border-bottom: 0.4vw solid rgba(0,0,0,0.21);
+        border-radius: 0.4vw;
+        text-shadow: 0 0.1vw 0 rgba(0,0,0,0.15);
+    }
+
+    .item button.mainButton {
+        margin-top: 2vh;
+        text-decoration: none;
+        background-color:#d54d7b;
+        color: #E6E6FA;
         padding: 1vh 3vw;
         display: inline-block;
         position: relative;

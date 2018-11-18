@@ -11120,6 +11120,8 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12657,9 +12659,11 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("button", { attrs: { type: "submit" } }, [
-                _vm._v("Ajouter la recette")
-              ]),
+              _c(
+                "button",
+                { staticClass: "mainButton", attrs: { type: "submit" } },
+                [_vm._v("Ajouter la recette")]
+              ),
               _vm._v(" "),
               _vm.errors.length
                 ? _c("p", [
@@ -12839,9 +12843,8 @@ var render = function() {
                   _vm._l(article.description, function(etape, index) {
                     return _c("div", { key: etape.id }, [
                       _c("p", [
-                        _vm._v(
-                          "Etape " + _vm._s(index + 1) + " : " + _vm._s(etape)
-                        )
+                        _c("b", [_vm._v(" Etape " + _vm._s(index + 1) + " :")]),
+                        _vm._v(" " + _vm._s(etape))
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -13066,13 +13069,14 @@ var render = function() {
     _c(
       "a",
       {
+        staticClass: "title",
         on: {
           click: function($event) {
             _vm.handleIndex()
           }
         }
       },
-      [_vm._v("Home")]
+      [_vm._v("CookChef")]
     ),
     _vm._v(" "),
     _c(
@@ -13084,7 +13088,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("About")]
+      [_vm._v("Qui sommes-nous ?")]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "topnav-right" }, [
@@ -13105,7 +13109,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Login")]
+        [_vm._v("Se connecter")]
       ),
       _vm._v(" "),
       _c(
@@ -13120,7 +13124,7 @@ var render = function() {
             }
           ]
         },
-        [_vm._v("Connected")]
+        [_vm._v("Vous êtes connecté")]
       ),
       _vm._v(" "),
       _c(
@@ -13140,7 +13144,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Logout")]
+        [_vm._v("Se déconnecter")]
       )
     ])
   ])
@@ -13226,32 +13230,34 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("body", [
       _c("div", { staticClass: "main2" }, [
-        _c("h3", [_vm._v("About Us")]),
-        _vm._v(" "),
-        _c("h1", [_vm._v("L'EQUIPE "), _c("br"), _vm._v("CookChef")]),
-        _vm._v(" "),
-        _c("p", [
+        _c("div", { staticClass: "item" }, [
+          _c("h1", [_vm._v("Qui sommes-nous ?")]),
+          _vm._v(" "),
+          _c("h3", [_vm._v("L'équipe "), _c("br"), _vm._v("CookChef")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "Nous sommes une équipe de deux personnes rassemblées à Paris \r\n      "
+            ),
+            _c("br"),
+            _vm._v(
+              "et avons parcouru les 4 coins du globe à la recherche de recettes faciles \r\n      "
+            ),
+            _c("br"),
+            _vm._v("à faire à la maison et faites pour les petits budgets.")
+          ]),
+          _vm._v(" "),
+          _c("h3", [_vm._v("Lire La Story")]),
           _vm._v(
-            "Nous sommes une équipe de deux personnes rassemblées à Paris \r\n    "
+            "\r\n      Tout a commencé à Paris en septmebre 2018, 2 Esiearques loin d'être des experts en cuisine.\r\n      "
           ),
           _c("br"),
-          _vm._v(
-            "et avons parcouru les 4 coins du globe à la recherche de recettes faciles \r\n    "
-          ),
+          _vm._v("Connaissant le budget limité des étudiants, \r\n      "),
           _c("br"),
-          _vm._v("à faire à la maison et faites pour les petits budgets.")
-        ]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Lire La Story")]),
-        _vm._v(
-          "\r\n    Tout a commencé à Paris en septmebre 2018, 2 esiearques loin d'être des experts en cuisine.\r\n    "
-        ),
-        _c("br"),
-        _vm._v("Connaissant le budget limité des étudiants, \r\n    "),
-        _c("br"),
-        _vm._v(
-          "ont eu l'idée de faire partager des recettes abordables tout en s'amusant.\r\n    "
-        )
+          _vm._v(
+            "ont eu l'idée de faire partager des recettes abordables tout en s'amusant.\r\n    "
+          )
+        ])
       ])
     ])
   }

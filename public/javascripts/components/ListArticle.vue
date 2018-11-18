@@ -7,7 +7,7 @@
                 <img :src="article.picturePath" @error="ErrorImage(article.picturePath)" v-on:click="showDescription(article)"><br/>
                 <div v-if="article.show">
                     <div v-for="(etape, index) in article.description" :key="etape.id">
-                        <p>Etape {{index + 1}} : {{etape}}</p>
+                        <p><b> Etape {{index + 1}} :</b> {{etape}}</p>
                         <input type="text" class="form-control" placeholder="Ecrivez ici pour modifier cette étape puis appuyez sur Entrée !" v-show="isconnected" v-model="etapeUpdate" @keyup.enter="updateEtape(index, article)">
                     </div>
                     <div class="ingredients">
