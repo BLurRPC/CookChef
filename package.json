@@ -6,7 +6,7 @@
     "author": "Thomas Biron",
     "scripts": {
         "build": "webpack",
-        "start": "app.js"
+        "start": "node app.js"
     },
     "dependencies": {
         "axios": "^0.16.2",

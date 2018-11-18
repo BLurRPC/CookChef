@@ -26,8 +26,8 @@
 
 
             <p>
-                <strong>Aucun article</strong>
-                <br/>Il n'y a aucun article ...
+                <strong>Aucune Recette !</strong>
+                <br/>L'admin a dû faire une bêtise ...
             </p>
 
         </div>
