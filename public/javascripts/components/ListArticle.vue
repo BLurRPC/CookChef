@@ -2,7 +2,10 @@
     <div>
         <h3 class="allArticles">Toutes nos recettes</h3>
         <div class="main" v-show="articles.length>0">
-            <div class="item" v-for="article in articles" :key="article.id">
+            <div class="search-wrapper">
+                <input type="text" v-model="search" placeholder="Rechercher par titre de recette ..."/>
+            </div><br/>
+            <div class="item" v-for="article in filteredList" :key="article.id">
                 <h1>{{article.title}}</h1>
                 <img :src="article.picturePath" @error="ErrorImage(article.picturePath)" v-on:click="showDescription(article)"><br/>
                 <div v-if="article.show">
@@ -48,16 +51,24 @@
 
             return {
                 articles: [],
+                search: '',
                 isconnected: false
             }
 
+        },
+
+        computed: {
+            filteredList: function () {
+                return this.articles.filter(article => {
+                    return article.title.toLowerCase().includes(this.search.toLowerCase());
+                })
+            }
         },
 
         created: function () {
             this.fetchArticle();
             this.listenToEvents();
         },
-
 
         methods: {
 
