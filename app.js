@@ -3,7 +3,6 @@
 /* jslint node: true */
 'use strict'
 var express = require('express')
-var morgan = require('morgan')
 var path = require('path')
 var bodyParser = require('body-parser')
 var app = express()
@@ -12,16 +11,13 @@ const session = require('express-session')
 // Sends static files  from the public path directory
 app.use(express.static(path.join(__dirname, '/public')))
 
-// Use morgan to log request in dev mode
-app.use(morgan('dev'))
-
 app.use(bodyParser.json())
 
 app.use(bodyParser.urlencoded({extended: true}))
 
 var port = 4000
 
-app.listen(port) // Listen on port defined in config file
+app.listen(port) // Listen on port
 
 console.log('App listening on port ' + port)
 

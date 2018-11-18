@@ -12,7 +12,7 @@
       <br>pour nous suivre au jour le jour.
       <br><strong>NOUS CONTACTER</strong>
       <br><i class="fa fa-envelope"></i> <a href="mailto:contact@cookchef.fr">contact@cookchef.fr</a>
-      <br><i class="fa fa-facebook"></i><a href="https://www.facebook.com/BATI-BHB-217752981682692/?ref=br_rs" onclick="window.open(this.href); return false;">Suivez nous !</a>
+      <br><i class="fa fa-facebook"></i><a href="#">Suivez nous !</a>
   </div>
   </div>
 </div>
